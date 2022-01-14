@@ -5,9 +5,10 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="section" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="todo" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="TodoList" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="TodoList" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

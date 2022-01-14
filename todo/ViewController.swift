@@ -16,19 +16,23 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     @IBOutlet weak var date: UITextField!
     @IBOutlet weak var scheduleText: UITextField!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var timeText: UITextField!
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     struct Schedule {
         var section: Int?
         var id: Int?
         var date: Date
         var todo: String
+        var time: Int?
         var alarm: Bool
     }
     
     var i = 0
     // MARK: - Action
     @IBAction func touchUpAddButton(_ sender: UIButton){
+        
+        
+        
         
         let schedule = Schedule(section: 0, id: 0, date: Date(), todo: scheduleText.text!, alarm: false)
         insertSchedule(schedule)
@@ -119,5 +123,7 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     func formatSectionData(_ section: Int){
         deleteSchedule(section, nil)
     }
+    
+    //modify 구현예정
 }
 
