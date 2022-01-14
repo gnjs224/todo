@@ -13,30 +13,43 @@ import CoreData
 class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource{
     // MARK: - Value
     
-    @IBOutlet weak var date: UITextField!
+    @IBOutlet weak var startDate: UIDatePicker!
+    @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var scheduleText: UITextField!
+    @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
+    @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var timeText: UITextField!
+    
+    
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     struct Schedule {
-        var section: Int?
-        var id: Int?
-        var date: Date
+        var start: Date
+        var end: Date
         var todo: String
-        var time: Int?
+        var re: [Int]
         var alarm: Bool
     }
     
     var i = 0
     // MARK: - Action
     @IBAction func touchUpAddButton(_ sender: UIButton){
+        //유저디폴트로 문자로입력 on인지 off인지 확인
+        
+        print("시작:",startDate.date)
+        print("종료:",endDate.date)
+        print("내용: ",scheduleText.text!)
+        print("반복: ", alarmSwitch.isOn)//?
+        print("알람: ", alarmSwitch.isOn)
+        //날짜 키워드
+        //오늘, 내일, 모레, 년, 월, 일, 요일 이번주, 다음주, 다다음주, 3주뒤 4주뒤 요일, 다음달, 매달, 매일, 매주
+        //우선 날짜선택하는거로 ?
         
         
         
-        
-        let schedule = Schedule(section: 0, id: 0, date: Date(), todo: scheduleText.text!, alarm: false)
+        let schedule = Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: [0,1,2,3], alarm: false)
         insertSchedule(schedule)
-        let result = getSchedule(0, 0)
+        let result = getSchedule(nil)
         result.forEach{
             print($0.todo!)
         }
@@ -46,8 +59,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     }
     @IBAction func deleteTest(_ sender: UIButton){
         print("a")
-        deleteSchedule(0, 0)
-        let result = getSchedule(0, 3)
+        deleteSchedule(nil)
+        let result = getSchedule(nil)
         print("----a--------")
         print(result)
         print("------a------")
@@ -55,8 +68,10 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     // MARK: - Method
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
+        
+       
+
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -71,14 +86,19 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
 
     func insertSchedule(_ schedule: Schedule){
         let entity = NSEntityDescription.entity(forEntityName: "TodoList", in: context)
+        let info = getSchedule(nil)
+        var id = 0
+        if info.count != 0 {
+            id = Int(info.last!.id + 1)
+        }
         if let entity = entity {
             let managedObject = NSManagedObject(entity: entity, insertInto: context)
-            managedObject.setValue(schedule.section, forKey: "section")
-            managedObject.setValue(schedule.id, forKey: "id")
-            managedObject.setValue(schedule.date, forKey: "date")
+            managedObject.setValue(id, forKey: "id")
+            managedObject.setValue(schedule.start, forKey: "start")
+            managedObject.setValue(schedule.end, forKey: "end")
             managedObject.setValue(schedule.todo, forKey: "todo")
             managedObject.setValue(schedule.alarm, forKey: "alarm")
-
+            managedObject.setValue(schedule.re, forKey: "re")
             do{
                 try context.save()
             } catch{
@@ -88,13 +108,11 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
      
         
     }
-    func getSchedule(_ section: Int, _ id:Int?) -> [TodoList]{
+    func getSchedule( _ id:Int?) -> [TodoList]{
         let request: NSFetchRequest<TodoList> = TodoList.fetchRequest()
 
         if id != nil {
-            request.predicate = NSPredicate(format: "section = %@ && id = %@", String(section), String(id!))
-        }else{
-            request.predicate = NSPredicate(format: "section = %@", String(section))
+            request.predicate = NSPredicate(format: " id = %@", String(id!))
         }
         do{
             let result = try context.fetch(request)
@@ -105,8 +123,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         }
     }
 
-    func deleteSchedule(_ section: Int, _ id:Int?) {
-        let result = getSchedule(section, id)
+    func deleteSchedule(_ id:Int?) {
+        let result = getSchedule(id)
         if result.count < 1 {
             return
         }
@@ -121,7 +139,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     }
     
     func formatSectionData(_ section: Int){
-        deleteSchedule(section, nil)
+        deleteSchedule(nil)
+        
     }
     
     //modify 구현예정
