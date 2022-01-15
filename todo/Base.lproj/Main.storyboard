@@ -94,6 +94,10 @@
                                 <rect key="frame" x="0.0" y="452" width="414" height="361"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6Bu-xj-06W"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iKA-bl-cP0"/>
+                                </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="63E-ut-9Do">
                                 <rect key="frame" x="30" y="396.5" width="354" height="32"/>
@@ -162,6 +166,7 @@
                         <outlet property="endDate" destination="MfI-VB-635" id="K3N-hF-5df"/>
                         <outlet property="scheduleText" destination="wWO-MA-chh" id="dQb-FH-aE2"/>
                         <outlet property="startDate" destination="e8q-uV-Dus" id="s5V-CY-eLo"/>
+                        <outlet property="todoTable" destination="Qwn-96-sM1" id="2sk-Y5-ABe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

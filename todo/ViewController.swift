@@ -18,11 +18,18 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     @IBOutlet weak var scheduleText: UITextField!
     @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
     @IBOutlet weak var alarmSwitch: UISwitch!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var todoTable: UITableView!
     
     
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    lazy var fetchResultController: NSFetchedResultsController<TodoList> = {
+        let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start",ascending: false)]
+        let fetchResult = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        return fetchResult
+    }()
     struct Schedule {
         var start: Date
         var end: Date
@@ -56,6 +63,13 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         print("------------")
         print(result)
         print("------------")
+        
+        do{
+            try fetchResultController.performFetch()
+            print("fetch success")
+        }catch let err{
+            print("Fatal error", err.localizedDescription)
+        }
     }
     @IBAction func deleteTest(_ sender: UIButton){
         print("a")
@@ -69,21 +83,12 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-       
+    }
 
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
     
     
     // MARK: - Persistence
     //등록, 조회, 삭제
-
     func insertSchedule(_ schedule: Schedule){
         let entity = NSEntityDescription.entity(forEntityName: "TodoList", in: context)
         let info = getSchedule(nil)
@@ -140,9 +145,20 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     
     func formatSectionData(_ section: Int){
         deleteSchedule(nil)
-        
     }
     
     //modify 구현예정
+    
+    // MARK: - 테이블 뷰
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchResultController.sections?[0].numberOfObjects ?? 1
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+//    unc reloadTodoTableAndShowData(){
+//        self.tableView.reloadData()
+//
+//    }
 }
 
