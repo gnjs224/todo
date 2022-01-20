@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7689C8B5F9284768471074D4 /* Pods_todo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF007EA92EDF86BB7A96BDC1 /* Pods_todo.framework */; };
+		7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A67B279943E700E41CC8 /* ModifyViewController.swift */; };
+		78189591279506250055F9FE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78189590279506250055F9FE /* CustomTableViewCell.swift */; };
 		78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D51278D770B00F5A394 /* AppDelegate.swift */; };
 		78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D53278D770B00F5A394 /* SceneDelegate.swift */; };
 		78516D56278D770B00F5A394 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D55278D770B00F5A394 /* ViewController.swift */; };
@@ -15,13 +18,13 @@
 		78516D5E278D770B00F5A394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */; };
 		789187A1278EB338001B8A7B /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7891879F278EB338001B8A7B /* TodoList.xcdatamodeld */; };
 		789187CB278FFBC2001B8A7B /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789187CA278FFBC2001B8A7B /* PersistenceManager.swift */; };
-		8C6ABF0695C79297501631CF /* Pods_todo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5083DDE1D86D6739D0E74C /* Pods_todo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		104D2564BC8A02BDA1B71DBD /* Pods-todo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todo.debug.xcconfig"; path = "Target Support Files/Pods-todo/Pods-todo.debug.xcconfig"; sourceTree = "<group>"; };
-		5C5083DDE1D86D6739D0E74C /* Pods_todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F2E9F3C520A021E3EF641E5 /* Pods-todo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todo.release.xcconfig"; path = "Target Support Files/Pods-todo/Pods-todo.release.xcconfig"; sourceTree = "<group>"; };
+		7803A67B279943E700E41CC8 /* ModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewController.swift; sourceTree = "<group>"; };
+		78189590279506250055F9FE /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		78516D4E278D770B00F5A394 /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78516D51278D770B00F5A394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78516D53278D770B00F5A394 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +35,7 @@
 		78516D5F278D770B00F5A394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		789187A0278EB338001B8A7B /* TodoList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoList.xcdatamodel; sourceTree = "<group>"; };
 		789187CA278FFBC2001B8A7B /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		EF007EA92EDF86BB7A96BDC1 /* Pods_todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C6ABF0695C79297501631CF /* Pods_todo.framework in Frameworks */,
+				7689C8B5F9284768471074D4 /* Pods_todo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +62,7 @@
 		4A308F5C9DEEC4778040279A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5C5083DDE1D86D6739D0E74C /* Pods_todo.framework */,
+				EF007EA92EDF86BB7A96BDC1 /* Pods_todo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -88,11 +92,13 @@
 				78516D51278D770B00F5A394 /* AppDelegate.swift */,
 				78516D53278D770B00F5A394 /* SceneDelegate.swift */,
 				78516D55278D770B00F5A394 /* ViewController.swift */,
+				78189590279506250055F9FE /* CustomTableViewCell.swift */,
 				789187CA278FFBC2001B8A7B /* PersistenceManager.swift */,
 				7891879F278EB338001B8A7B /* TodoList.xcdatamodeld */,
 				78516D5A278D770B00F5A394 /* Assets.xcassets */,
 				78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */,
 				78516D57278D770B00F5A394 /* Main.storyboard */,
+				7803A67B279943E700E41CC8 /* ModifyViewController.swift */,
 			);
 			path = todo;
 			sourceTree = "<group>";
@@ -108,7 +114,6 @@
 				78516D4A278D770B00F5A394 /* Sources */,
 				78516D4B278D770B00F5A394 /* Frameworks */,
 				78516D4C278D770B00F5A394 /* Resources */,
-				3C227E1E9C54BA9448759271 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,23 +193,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3C227E1E9C54BA9448759271 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -214,7 +202,9 @@
 			files = (
 				789187A1278EB338001B8A7B /* TodoList.xcdatamodeld in Sources */,
 				789187CB278FFBC2001B8A7B /* PersistenceManager.swift in Sources */,
+				78189591279506250055F9FE /* CustomTableViewCell.swift in Sources */,
 				78516D56278D770B00F5A394 /* ViewController.swift in Sources */,
+				7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */,
 				78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */,
 				78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */,
 			);
