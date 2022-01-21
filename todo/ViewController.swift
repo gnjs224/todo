@@ -9,10 +9,14 @@ import UIKit
 import CoreData
 
 
-protocol SendUpdateProtocol: AnyObject{
-    func sendUpdated()
-}
-class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate{
+//protocol SendUpdateProtocol: AnyObject{
+//    func sendUpdated()
+//}
+class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
+    func sendUpdate() {
+        fetchAndReload()
+    }
+    
     // MARK: - Value
     
     @IBOutlet weak var startDate: UIDatePicker!
@@ -22,13 +26,10 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var todoTable: UITableView!
 
-//    @IBOutlet weak var alarmTableSwitch: UISwitch!
-
     weak var delegate: SendUpdateProtocol?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     lazy var fetchResultController: NSFetchedResultsController<TodoList> = {
         let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: " start = %@", currentDate)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start",ascending: false)]
         let fetchResult = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchResult.delegate = self
@@ -86,11 +87,7 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         print("------a------")
         fetchAndReload()
     }
-    @IBAction func touchUpAlarmTableSwitch(_ sender: UISwitch){
-        print(sender.isOn)
-//        print(tableView.indexPath)
-//        print(tableView.in)
-    }
+
     // MARK: - Method
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
@@ -119,10 +116,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         endDate.date = dateFormatter.date(from: str)!
         print("start,end",startDate.date,endDate.date)
         print(str)
-//        date.dateFormat(fromTemplate: <#T##String#>, options: <#T##Int#>, locale: <#T##Locale?#>)
         print("start",startDate.date)
         fetchAndReload()
-        // Do any additional setup after loading the view.
     }
     func fetchAndReload(){
         do{
@@ -137,6 +132,7 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     
     // MARK: - Persistence
     //등록, 조회, 삭제
+    // MARK: insertSchedule
     func insertSchedule(_ schedule: Schedule){
         let entity = NSEntityDescription.entity(forEntityName: "TodoList", in: context)
         let info = getSchedule(nil)
@@ -221,11 +217,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         } catch{
             print(error.localizedDescription)
         }
-        
-//        print(id,start,end,content,re,alarm)
     }
-    //modify 구현예정
-    
+
     // MARK: - 테이블 뷰
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchResultController.sections?[0].numberOfObjects ?? 1
@@ -247,9 +240,27 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         cell.accessoryView = alarmTableSwitch
         return cell
     }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let complete = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
+            print("complete")
+        })
+        let modify = UIContextualAction(style: .normal, title: "수정", handler: {(action, view, completionHandler) in
+            print("modify")
+            
+            
+        })
+        let delete = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
+            print("delete")
+        })
+        return UISwipeActionsConfiguration(actions: [delete,modify,complete])
+    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//    }
     @objc func switchChanged(_ sender: UISwitch!){
         modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn)
     }
+    
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -263,21 +274,14 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         nextVC.endToSet = cell.endDate
         nextVC.contentToSet = cell.contentLabel.text
         nextVC.cellId = cell.accessoryView?.tag
-//        print(cell)
-//        nextVC.reToSet
         nextVC.alarmToSet = (cell.accessoryView as! UISwitch).isOn
+        nextVC.delegate = self
+        
 //        print("asd",cell.accessoryView?.tag)
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
     
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        if type == .insert{
-//            print("asd")
-//            delegate?.sendUpdated()
-////            blockOperations.append(BlockOperation(block: {s}))
-//        }
-//    }
     
 }
 

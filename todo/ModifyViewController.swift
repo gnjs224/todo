@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import CoreData
+protocol SendUpdateProtocol : AnyObject{
+    func sendUpdate()
+}
+class ModifyViewController: UIViewController, NSFetchedResultsControllerDelegate {
+    weak var delegate: SendUpdateProtocol?
 
-class ModifyViewController: UIViewController {
-    
     let ParentView: ViewController = ViewController()
     var startToSet: Date?
     var endToSet: Date?
@@ -38,18 +42,23 @@ class ModifyViewController: UIViewController {
         let alert = UIAlertController(title: "알림", message: "변경사항을 저장하시겠습니까 ?", preferredStyle: UIAlertController.Style.alert)
         let alertCancel = UIAlertAction(title: "cancel", style: UIAlertAction.Style.default)
         let alertOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
-            (action) in self.navigationController?.popViewController(animated: false)
-            print(self.cellId!)
+            (action) in
+            self.navigationController?.popViewController(animated: false)
+            
             self.ParentView.modifySchedule(self.cellId!, self.ModifyStart.date, self.ModifyEnd.date, self.ModifyContent.text, [1,2,3], self.ModifyAlarm.isOn)
+            self.dismiss(animated: true, completion: nil)
+            self.delegate?.sendUpdate()
+            
         })
-        alert.addAction((alertCancel))
-        alert.addAction((alertOk))
-        
+        alert.addAction(alertCancel)
+        alert.addAction(alertOk)
+    
 //        present(alert,animated: true, completion{})
         present(alert, animated: false)
         
     }
     @IBAction func touchUpDeleteButton(_sender: UIButton){
+        dismiss(animated: true, completion: nil)
     }
 
     /*

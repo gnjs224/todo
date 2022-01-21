@@ -65,9 +65,9 @@
                                 <rect key="frame" x="335" y="255.5" width="51" height="31"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jU-Ex-50w">
-                                <rect key="frame" x="305" y="303.5" width="89" height="31"/>
+                                <rect key="frame" x="300" y="303.5" width="94" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="조건 초기화"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.down.backward.square" catalog="system" title="정렬기준"/>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="e8q-uV-Dus">
                                 <rect key="frame" x="47" y="105" width="320" height="50"/>
@@ -153,7 +153,7 @@
                                             <outlet property="endLabel" destination="NXK-Hv-K2S" id="BnW-Mj-Scb"/>
                                             <outlet property="reLabel" destination="6iH-L5-MYV" id="Ws3-wo-Osi"/>
                                             <outlet property="startLabel" destination="UaF-6q-PhW" id="WT7-iU-lch"/>
-                                            <segue destination="G9o-u6-lzj" kind="show" id="aqx-PF-LZu"/>
+                                            <segue destination="G9o-u6-lzj" kind="showDetail" id="v6R-Cs-CWY"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -179,9 +179,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28x-md-9q7">
-                                <rect key="frame" x="20" y="303.5" width="73" height="31"/>
+                                <rect key="frame" x="20" y="303.5" width="109.5" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="정렬기준"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="조건 초기화"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -252,11 +252,11 @@
             <objects>
                 <viewController id="G9o-u6-lzj" customClass="ModifyViewController" customModule="todo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NKk-VB-aJu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hYj-r7-JRt">
-                                <rect key="frame" x="85" y="242.5" width="244" height="35"/>
+                                <rect key="frame" x="85" y="154.5" width="244" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="cc1-Zp-UK5"/>
                                 </constraints>
@@ -264,72 +264,79 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시작" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbV-DC-nrD">
-                                <rect key="frame" x="40" y="151" width="35" height="24"/>
+                                <rect key="frame" x="40" y="63" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqE-g5-Hnv">
-                                <rect key="frame" x="40" y="248" width="35" height="24"/>
+                                <rect key="frame" x="40" y="160" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqu-4i-muD">
-                                <rect key="frame" x="40" y="201" width="35" height="24"/>
+                                <rect key="frame" x="40" y="113" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="알람" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKR-dI-gt1">
-                                <rect key="frame" x="300" y="292" width="35" height="24"/>
+                                <rect key="frame" x="300" y="204" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PGp-Rb-8rc">
-                                <rect key="frame" x="345" y="288.5" width="51" height="31"/>
+                                <rect key="frame" x="345" y="200.5" width="51" height="31"/>
                             </switch>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="7hP-U5-MQX">
-                                <rect key="frame" x="47" y="138" width="320" height="50"/>
+                                <rect key="frame" x="47" y="50" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="wNX-rc-Pgu"/>
                                 </constraints>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pse-FN-9zb">
-                                <rect key="frame" x="47" y="188" width="320" height="50"/>
+                                <rect key="frame" x="47" y="100" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mYN-gR-i71"/>
                                 </constraints>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="반복" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l56-Is-0OF">
-                                <rect key="frame" x="40" y="292" width="35" height="24"/>
+                                <rect key="frame" x="40" y="204" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="월 화 수 목 금 토 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZgZ-3k-Rsv">
-                                <rect key="frame" x="105" y="293.5" width="130" height="21"/>
+                                <rect key="frame" x="105" y="205.5" width="130" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIK-t4-Xwi">
+                                <rect key="frame" x="10" y="11" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="취소"/>
+                                <connections>
+                                    <action selector="touchUpDeleteButtonWith_sender:" destination="G9o-u6-lzj" eventType="touchUpInside" id="waL-U2-bgB"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="수정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0U2-Qd-Mms">
+                                <rect key="frame" x="192" y="7" width="30" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wRn-3S-FQi">
-                                <rect key="frame" x="105" y="604" width="49" height="31"/>
+                                <rect key="frame" x="314" y="9" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="저장"/>
                                 <connections>
                                     <action selector="touchUpSaveButtonWith_sender:" destination="G9o-u6-lzj" eventType="touchUpInside" id="1fx-Dn-FyC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIK-t4-Xwi">
-                                <rect key="frame" x="249" y="604" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="삭제"/>
-                                <connections>
-                                    <action selector="touchUpDeleteButtonWith_sender:" destination="G9o-u6-lzj" eventType="touchUpInside" id="waL-U2-bgB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -483,6 +490,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.down.backward.square" catalog="system" width="128" height="114"/>
+        <image name="arrow.up.forward.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
