@@ -63,7 +63,6 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         //우선 날짜선택하는거로 ?
         if endDate.date < startDate.date {
             showToast(message: "에러: 시작 > 종료")
-      
         }else{
             let schedule = Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: [0,1,2,3], alarm: alarmSwitch.isOn)
             insertSchedule(schedule)
@@ -76,8 +75,6 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
             print("------------")
             fetchAndReload()
         }
-        
-       
 
     }
     @IBAction func deleteTest(_ sender: UIButton){
@@ -109,7 +106,9 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
         
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        fetchAndReload()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         let nowDate = Date()
@@ -196,16 +195,33 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         deleteSchedule(nil)
     }
     func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?){
-        let target = getSchedule(id)
-        print("coredata:",id,target)
-        if target.count != 0 {
-            target[0].alarm = alarm!
+        let targetList = getSchedule(id)
+        print("modify func: ",targetList)
+        if targetList.count != 0 {
+            let target = targetList[0]
+            if start != nil{
+                target.start = start!
+            }
+            if end != nil{
+                target.end = end!
+            }
+            if content != nil{
+                target.todo = content!
+            }
+//            if re != nil{
+//                target.re = re!
+//            }
+            if alarm != nil{
+                target.alarm = alarm!
+            }
         }
         do{
             try context.save()
+            
         } catch{
             print(error.localizedDescription)
         }
+        
 //        print(id,start,end,content,re,alarm)
     }
     //modify 구현예정
@@ -233,7 +249,6 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     }
     @objc func switchChanged(_ sender: UISwitch!){
         modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn)
-        print("selectedId:",sender.tag)
     }
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -247,6 +262,8 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         nextVC.startToSet = cell.startDate
         nextVC.endToSet = cell.endDate
         nextVC.contentToSet = cell.contentLabel.text
+        nextVC.cellId = cell.accessoryView?.tag
+//        print(cell)
 //        nextVC.reToSet
         nextVC.alarmToSet = (cell.accessoryView as! UISwitch).isOn
 //        print("asd",cell.accessoryView?.tag)

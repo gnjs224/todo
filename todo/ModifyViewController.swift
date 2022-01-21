@@ -8,11 +8,14 @@
 import UIKit
 
 class ModifyViewController: UIViewController {
+    
+    let ParentView: ViewController = ViewController()
     var startToSet: Date?
     var endToSet: Date?
     var contentToSet: String?
 //    var reToSet:
     var alarmToSet: Bool?
+    var cellId: Int!
     @IBOutlet weak var ModifyStart: UIDatePicker!
     @IBOutlet weak var ModifyEnd: UIDatePicker!
     @IBOutlet weak var ModifyContent: UITextField!
@@ -32,6 +35,18 @@ class ModifyViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func touchUpSaveButton(_sender: UIButton){
+        let alert = UIAlertController(title: "알림", message: "변경사항을 저장하시겠습니까 ?", preferredStyle: UIAlertController.Style.alert)
+        let alertCancel = UIAlertAction(title: "cancel", style: UIAlertAction.Style.default)
+        let alertOk = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
+            (action) in self.navigationController?.popViewController(animated: false)
+            print(self.cellId!)
+            self.ParentView.modifySchedule(self.cellId!, self.ModifyStart.date, self.ModifyEnd.date, self.ModifyContent.text, [1,2,3], self.ModifyAlarm.isOn)
+        })
+        alert.addAction((alertCancel))
+        alert.addAction((alertOk))
+        
+//        present(alert,animated: true, completion{})
+        present(alert, animated: false)
         
     }
     @IBAction func touchUpDeleteButton(_sender: UIButton){
