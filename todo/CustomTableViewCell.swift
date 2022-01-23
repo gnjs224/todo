@@ -12,9 +12,13 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var endLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var reLabel: UILabel!
-    @IBOutlet weak var alarm: UISwitch!
+    var id: Int?
     var startDate: Date?
     var endDate: Date?
+    var content: String?
+    var alarm: Bool?
+    var re: [Int]?
+    var state: Int?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

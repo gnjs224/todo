@@ -96,7 +96,7 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
     func formatAllData(){
         deleteSchedule(nil)
     }
-    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?){
+    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?,_ state: Int?){
         let targetList = getSchedule(id)
         print("modify func: ",targetList)
         if targetList.count != 0 {
@@ -115,6 +115,9 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
 //            }
             if alarm != nil{
                 target.alarm = alarm!
+            }
+            if state != nil{
+                target.state = Int16(NSInteger(state!))
             }
         }
         do{

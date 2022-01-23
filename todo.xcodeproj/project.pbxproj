@@ -11,6 +11,7 @@
 		7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A67B279943E700E41CC8 /* ModifyViewController.swift */; };
 		7803A683279D2E3800E41CC8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A682279D2E3800E41CC8 /* MainModel.swift */; };
 		7803A685279D2E4700E41CC8 /* ModifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A684279D2E4700E41CC8 /* ModifyModel.swift */; };
+		7803A68A279D31DA00E41CC8 /* DayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A689279D31DA00E41CC8 /* DayScrollView.swift */; };
 		78189591279506250055F9FE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78189590279506250055F9FE /* CustomTableViewCell.swift */; };
 		78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D51278D770B00F5A394 /* AppDelegate.swift */; };
 		78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D53278D770B00F5A394 /* SceneDelegate.swift */; };
@@ -28,6 +29,7 @@
 		7803A67B279943E700E41CC8 /* ModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewController.swift; sourceTree = "<group>"; };
 		7803A682279D2E3800E41CC8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		7803A684279D2E4700E41CC8 /* ModifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyModel.swift; sourceTree = "<group>"; };
+		7803A689279D31DA00E41CC8 /* DayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScrollView.swift; sourceTree = "<group>"; };
 		78189590279506250055F9FE /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		78516D4E278D770B00F5A394 /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78516D51278D770B00F5A394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,9 +128,10 @@
 				78516D53278D770B00F5A394 /* SceneDelegate.swift */,
 				7891879F278EB338001B8A7B /* TodoList.xcdatamodeld */,
 				78516D5A278D770B00F5A394 /* Assets.xcassets */,
+				78189590279506250055F9FE /* CustomTableViewCell.swift */,
 				78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */,
 				789187CA278FFBC2001B8A7B /* PersistenceManager.swift */,
-				78189590279506250055F9FE /* CustomTableViewCell.swift */,
+				7803A689279D31DA00E41CC8 /* DayScrollView.swift */,
 			);
 			path = todo;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				78516D56278D770B00F5A394 /* MainViewController.swift in Sources */,
 				7803A685279D2E4700E41CC8 /* ModifyModel.swift in Sources */,
 				7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */,
+				7803A68A279D31DA00E41CC8 /* DayScrollView.swift in Sources */,
 				78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */,
 				78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */,
 			);

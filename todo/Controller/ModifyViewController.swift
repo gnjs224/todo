@@ -40,7 +40,7 @@ class ModifyViewController: UIViewController, NSFetchedResultsControllerDelegate
             (action) in
             self.navigationController?.popViewController(animated: false)
             
-            MainViewController.shared.modifySchedule(self.cellId!, self.ModifyStart.date, self.ModifyEnd.date, self.ModifyContent.text, [1,2,3], self.ModifyAlarm.isOn)
+            MainViewController.shared.modifySchedule(self.cellId!, self.ModifyStart.date, self.ModifyEnd.date, self.ModifyContent.text, [1,2,3], self.ModifyAlarm.isOn,0)
             self.dismiss(animated: true, completion: nil)
             self.delegate?.sendUpdate()
             

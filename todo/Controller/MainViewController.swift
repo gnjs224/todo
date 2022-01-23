@@ -131,20 +131,41 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
 //        row.alarm
         cell.startDate = row.start
         cell.endDate = row.end
+
+        
         let alarmTableSwitch = UISwitch(frame: .zero)
         alarmTableSwitch.setOn(row.alarm, animated: true)
         alarmTableSwitch.tag = NSInteger(row.id)
+        
         alarmTableSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
         cell.accessoryView = alarmTableSwitch
+        
+        if row.state == 1 {
+            cell.backgroundColor = UIColor.gray
+            alarmTableSwitch.isEnabled = false
+        }else{
+            cell.backgroundColor = UIColor.white
+        }
         return cell
     }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+//        cell.backgroundColor = UIColor.white
+//    }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let complete = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
-            let alert = UIAlertController(title: "주의", message: "더이상 표시되지 않습니다. 계속하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+//        var state = 0
+        var actions: [UIContextualAction] = []
+//        guard let cell: CustomTableViewCell? = tableView.cellForRow(at: indexPath) as? CustomTableViewCell else {
+//            return
+//        }
+        let row = pm.fetchResultController.object(at: indexPath)
+        let delete = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
+            let alert = UIAlertController(title: "주의", message: "정말 삭제하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
             let alertCancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default)
             let alertOk = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: {
                 (action) in
-                print("complete")
+                self.pm.deleteSchedule(NSInteger(row.id))
+                self.fetchAndReload()
             })
             alert.addAction(alertCancel)
             alert.addAction(alertOk)
@@ -152,20 +173,50 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
     //        present(alert,animated: true, completion{})
             self.present(alert, animated: false)
         })
-        let modify = UIContextualAction(style: .normal, title: "수정", handler: {(action, view, completionHandler) in
-            print("modify")
-        })
-        let delete = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
-            print("delete")
-        })
-        complete.backgroundColor = UIColor.green
-        modify.backgroundColor = UIColor.blue
         delete.backgroundColor = UIColor.red
-        return UISwipeActionsConfiguration(actions: [delete,modify,complete])
+        actions.append(delete)
+        if row.state == 0{
+            let complete = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
+                let alert = UIAlertController(title: "주의", message: "완료 후엔 수정할 수 없어요! 계속할까요?", preferredStyle: UIAlertController.Style.alert)
+                let alertCancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default)
+                let alertOk = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: {
+                    (action) in
+                    row.state = 1
+                    row.alarm = false
+//                    self.pm.modifySchedule(NSInteger(row.id), nil, nil, nil, nil, nil,1)
+                    self.fetchAndReload()
+                })
+                alert.addAction(alertCancel)
+                alert.addAction(alertOk)
+            
+        //        present(alert,animated: true, completion{})
+                self.present(alert, animated: false)
+            })
+            let modify = UIContextualAction(style: .normal, title: "수정", handler: {(action, view, completionHandler) in
+//                let pushVC = ModifyViewController()
+                guard let nextVC: ModifyViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModifyView") as? ModifyViewController else{
+                    return
+                }
+                nextVC.startToSet = row.start
+                nextVC.endToSet = row.end
+                nextVC.contentToSet = row.todo
+                nextVC.cellId = NSInteger(row.id)
+                nextVC.alarmToSet = row.alarm
+                nextVC.delegate = self
+                nextVC.modalPresentationStyle = .automatic
+                self.present(nextVC, animated: true, completion: nil)
+            })
+            complete.backgroundColor = UIColor.green
+            modify.backgroundColor = UIColor.blue
+            actions.append(modify)
+            actions.append(complete)
+            
+        }
+        return UISwipeActionsConfiguration(actions: actions)
     }
 
     @objc func switchChanged(_ sender: UISwitch!){
-        pm.modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn)
+        pm.modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn,nil)
     }
     
     // MARK: - Navigation
@@ -185,8 +236,8 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
         nextVC.delegate = self
 
     }
-    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?){
-        pm.modifySchedule(id, start, end, content, re, alarm)
+    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?, _ state:Int?){
+        pm.modifySchedule(id, start, end, content, re, alarm,state)
     }
 
     
