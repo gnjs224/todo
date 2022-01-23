@@ -12,7 +12,7 @@
         <!--일정-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="todo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="todo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,7 +158,7 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6Bu-xj-06W"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="fpn-UN-TAR"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iKA-bl-cP0"/>
                                 </connections>
                             </tableView>
@@ -170,7 +170,7 @@
                                 </segments>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-Je-w50">
-                                <rect key="frame" x="39" y="79" width="67" height="31"/>
+                                <rect key="frame" x="119" y="320" width="67" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="format"/>
@@ -182,7 +182,16 @@
                                 <rect key="frame" x="20" y="303.5" width="109.5" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="조건 초기화"/>
+                                <connections>
+                                    <action selector="touchUpResetConditionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3iu-55-tfT"/>
+                                </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGg-BO-6Kc">
+                                <rect key="frame" x="20" y="60" width="347" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="VGC-C9-VHC"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="cag-Jb-pIg"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -228,12 +237,6 @@
                     <tabBarItem key="tabBarItem" title="일정" image="pencil" catalog="system" id="2P8-GJ-4YP"/>
                     <navigationItem key="navigationItem" id="yNV-lh-5rs">
                         <nil key="title"/>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="sPF-tE-KLM">
-                            <rect key="frame" x="169.5" y="5" width="75" height="34.5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                        </button>
                     </navigationItem>
                     <connections>
                         <outlet property="alarmSwitch" destination="m1D-DI-717" id="0Mq-p4-gDx"/>

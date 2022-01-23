@@ -12,11 +12,9 @@ import CoreData
 //protocol SendUpdateProtocol: AnyObject{
 //    func sendUpdated()
 //}
-class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
-    func sendUpdate() {
-        fetchAndReload()
-    }
-    
+class MainViewController: UIViewController,       UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
+
+    static var shared: MainViewController = MainViewController()
     // MARK: - Value
     
     @IBOutlet weak var startDate: UIDatePicker!
@@ -27,27 +25,9 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     @IBOutlet weak var todoTable: UITableView!
 
     weak var delegate: SendUpdateProtocol?
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    lazy var fetchResultController: NSFetchedResultsController<TodoList> = {
-        let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start",ascending: false)]
-        let fetchResult = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        fetchResult.delegate = self
-        return fetchResult
-    }()
-    let dateFormatter: DateFormatter = {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "MM/dd HH:mm"
-        return formatter
-    }()
-    struct Schedule {
-        var start: Date
-        var end: Date
-        var todo: String
-        var re: [Int]
-        var alarm: Bool
-    }
-    
+
+    let pm = PersistenceManager.shared
+//    let tm = MainTableViewController()
     var i = 0
     // MARK: - Action
     
@@ -65,29 +45,21 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         if endDate.date < startDate.date {
             showToast(message: "에러: 시작 > 종료")
         }else{
-            let schedule = Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: [0,1,2,3], alarm: alarmSwitch.isOn)
-            insertSchedule(schedule)
-            let result = getSchedule(nil)
-            result.forEach{
-                print($0.todo!)
-            }
-            print("------------")
-            print(result)
-            print("------------")
+            let schedule = PersistenceManager.Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: [0,1,2,3], alarm: alarmSwitch.isOn)
+            pm.insertSchedule(schedule)
+
             fetchAndReload()
         }
+        resetCondition()
 
     }
     @IBAction func deleteTest(_ sender: UIButton){
-        print("a")
-        deleteSchedule(nil)
-        let result = getSchedule(nil)
-        print("----a--------")
-        print(result)
-        print("------a------")
+        pm.deleteSchedule(nil)
         fetchAndReload()
     }
-
+    @IBAction func touchUpResetConditionButton(_ sender: UIButton){
+        resetCondition()
+    }
     // MARK: - Method
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
@@ -108,20 +80,26 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        resetCondition()
+        fetchAndReload()
+    }
+    func resetCondition(){
         let nowDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         let str = dateFormatter.string(from: nowDate)
         startDate.date = dateFormatter.date(from: str)!
         endDate.date = dateFormatter.date(from: str)!
-        print("start,end",startDate.date,endDate.date)
-        print(str)
-        print("start",startDate.date)
-        fetchAndReload()
+        scheduleText.text = ""
+        alarmSwitch.isOn = false
+        
     }
+    
+    
+    // MARK: - 테이블 뷰
     func fetchAndReload(){
         do{
-            try fetchResultController.performFetch()
+            try pm.fetchResultController.performFetch()
             todoTable.reloadData()
             print("fetch success")
         }catch let err{
@@ -129,103 +107,23 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         }
     }
     
-    
-    // MARK: - Persistence
-    //등록, 조회, 삭제
-    // MARK: insertSchedule
-    func insertSchedule(_ schedule: Schedule){
-        let entity = NSEntityDescription.entity(forEntityName: "TodoList", in: context)
-        let info = getSchedule(nil)
-        var id = 0
-        if info.count != 0 {
-            id = Int(info.last!.id + 1)
+
+    func sendUpdate() {
+            fetchAndReload()
         }
-        if let entity = entity {
-            let managedObject = NSManagedObject(entity: entity, insertInto: context)
-            managedObject.setValue(id, forKey: "id")
-            managedObject.setValue(schedule.start, forKey: "start")
-            managedObject.setValue(schedule.end, forKey: "end")
-            managedObject.setValue(schedule.todo, forKey: "todo")
-            managedObject.setValue(schedule.alarm, forKey: "alarm")
-            managedObject.setValue(schedule.re, forKey: "re")
-            do{
-                try context.save()
-            } catch{
-                print(error.localizedDescription)
-            }
-        }
-     
+
         
-    }
-    func getSchedule( _ id:Int?) -> [TodoList]{
-        let request: NSFetchRequest<TodoList> = TodoList.fetchRequest()
-
-        if id != nil {
-            request.predicate = NSPredicate(format: " id = %@", String(id!))
-        }
-        do{
-            let result = try context.fetch(request)
-            return result
-        }catch{
-            print(error.localizedDescription)
-            return []
-        }
-    }
-
-    func deleteSchedule(_ id:Int?) {
-        let result = getSchedule(id)
-        if result.count < 1 {
-            return
-        }
-        for i in 0...result.count-1 {
-            context.delete(result[i])
-        }
-        do{
-            try context.save()
-        } catch{
-            print(error.localizedDescription)
-        }
-    }
-    
-    func formatAllData(){
-        deleteSchedule(nil)
-    }
-    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?){
-        let targetList = getSchedule(id)
-        print("modify func: ",targetList)
-        if targetList.count != 0 {
-            let target = targetList[0]
-            if start != nil{
-                target.start = start!
-            }
-            if end != nil{
-                target.end = end!
-            }
-            if content != nil{
-                target.todo = content!
-            }
-//            if re != nil{
-//                target.re = re!
-//            }
-            if alarm != nil{
-                target.alarm = alarm!
-            }
-        }
-        do{
-            try context.save()
-            
-        } catch{
-            print(error.localizedDescription)
-        }
-    }
-
-    // MARK: - 테이블 뷰
+    let dateFormatter: DateFormatter = {
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "MM/dd HH:mm"
+        return formatter
+    }()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchResultController.sections?[0].numberOfObjects ?? 1
+        return pm.fetchResultController.sections?[0].numberOfObjects ?? 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-        let row = fetchResultController.object(at: indexPath)
+        let row = pm.fetchResultController.object(at: indexPath)
         cell.startLabel.text = self.dateFormatter.string(from: row.start!)
         cell.endLabel.text = self.dateFormatter.string(from: row.end!)
         cell.contentLabel.text = row.todo
@@ -242,27 +140,36 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let complete = UIContextualAction(style: .normal, title: "완료", handler: {(action, view, completionHandler) in
-            print("complete")
+            let alert = UIAlertController(title: "주의", message: "더이상 표시되지 않습니다. 계속하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+            let alertCancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default)
+            let alertOk = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: {
+                (action) in
+                print("complete")
+            })
+            alert.addAction(alertCancel)
+            alert.addAction(alertOk)
+        
+    //        present(alert,animated: true, completion{})
+            self.present(alert, animated: false)
         })
         let modify = UIContextualAction(style: .normal, title: "수정", handler: {(action, view, completionHandler) in
             print("modify")
-            
-            
         })
         let delete = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
             print("delete")
         })
+        complete.backgroundColor = UIColor.green
+        modify.backgroundColor = UIColor.blue
+        delete.backgroundColor = UIColor.red
         return UISwipeActionsConfiguration(actions: [delete,modify,complete])
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//    }
+
     @objc func switchChanged(_ sender: UISwitch!){
-        modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn)
+        pm.modifySchedule(sender.tag, nil, nil, nil, nil, sender.isOn)
     }
     
     // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let nextVC: ModifyViewController = segue.destination as? ModifyViewController else{
             return
@@ -276,11 +183,13 @@ class ViewController: UIViewController ,UITableViewDelegate,UITableViewDataSourc
         nextVC.cellId = cell.accessoryView?.tag
         nextVC.alarmToSet = (cell.accessoryView as! UISwitch).isOn
         nextVC.delegate = self
-        
-//        print("asd",cell.accessoryView?.tag)
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
     }
+    func modifySchedule(_ id:Int, _ start:Date?, _ end:Date?, _ content: String?, _ re: [Int]?, _ alarm: Bool?){
+        pm.modifySchedule(id, start, end, content, re, alarm)
+    }
+
+    
     
     
 }
