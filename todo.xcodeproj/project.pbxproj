@@ -11,7 +11,6 @@
 		7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A67B279943E700E41CC8 /* ModifyViewController.swift */; };
 		7803A683279D2E3800E41CC8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A682279D2E3800E41CC8 /* MainModel.swift */; };
 		7803A685279D2E4700E41CC8 /* ModifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A684279D2E4700E41CC8 /* ModifyModel.swift */; };
-		7803A68A279D31DA00E41CC8 /* DayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7803A689279D31DA00E41CC8 /* DayScrollView.swift */; };
 		78189591279506250055F9FE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78189590279506250055F9FE /* CustomTableViewCell.swift */; };
 		78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D51278D770B00F5A394 /* AppDelegate.swift */; };
 		78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78516D53278D770B00F5A394 /* SceneDelegate.swift */; };
@@ -29,7 +28,6 @@
 		7803A67B279943E700E41CC8 /* ModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewController.swift; sourceTree = "<group>"; };
 		7803A682279D2E3800E41CC8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		7803A684279D2E4700E41CC8 /* ModifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyModel.swift; sourceTree = "<group>"; };
-		7803A689279D31DA00E41CC8 /* DayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScrollView.swift; sourceTree = "<group>"; };
 		78189590279506250055F9FE /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		78516D4E278D770B00F5A394 /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78516D51278D770B00F5A394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 				78189590279506250055F9FE /* CustomTableViewCell.swift */,
 				78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */,
 				789187CA278FFBC2001B8A7B /* PersistenceManager.swift */,
-				7803A689279D31DA00E41CC8 /* DayScrollView.swift */,
 			);
 			path = todo;
 			sourceTree = "<group>";
@@ -147,6 +144,7 @@
 				78516D4A278D770B00F5A394 /* Sources */,
 				78516D4B278D770B00F5A394 /* Frameworks */,
 				78516D4C278D770B00F5A394 /* Resources */,
+				4A9AD377D54DF79AF29CE656 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -226,6 +224,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4A9AD377D54DF79AF29CE656 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-todo/Pods-todo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -240,7 +255,6 @@
 				78516D56278D770B00F5A394 /* MainViewController.swift in Sources */,
 				7803A685279D2E4700E41CC8 /* ModifyModel.swift in Sources */,
 				7803A67C279943E700E41CC8 /* ModifyViewController.swift in Sources */,
-				7803A68A279D31DA00E41CC8 /* DayScrollView.swift in Sources */,
 				78516D52278D770B00F5A394 /* AppDelegate.swift in Sources */,
 				78516D54278D770B00F5A394 /* SceneDelegate.swift in Sources */,
 			);

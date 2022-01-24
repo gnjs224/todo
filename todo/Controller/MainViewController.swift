@@ -7,15 +7,19 @@
 
 import UIKit
 import CoreData
-
-
+import SnapKit
+import DropDown
 //protocol SendUpdateProtocol: AnyObject{
 //    func sendUpdated()
 //}
-class MainViewController: UIViewController,       UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
-
+class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
+    
     static var shared: MainViewController = MainViewController()
     // MARK: - Value
+//    lazy var dayScrollView: DayScrollView = {
+//        let view = DayScrollView()
+//        return view
+//    }()
     
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var endDate: UIDatePicker!
@@ -23,8 +27,13 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
     @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var todoTable: UITableView!
-
+    @IBOutlet weak var dayScroll: UIScrollView!
     weak var delegate: SendUpdateProtocol?
+    let daysOfMonth:[Int:Int]! = [1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31]
+    
+    var year: Int!
+    var month: Int!
+    var day: Int!
 
     let pm = PersistenceManager.shared
 //    let tm = MainTableViewController()
@@ -50,7 +59,7 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
 
             fetchAndReload()
         }
-        resetCondition()
+//        resetCondition()
 
     }
     @IBAction func deleteTest(_ sender: UIButton){
@@ -60,7 +69,36 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
     @IBAction func touchUpResetConditionButton(_ sender: UIButton){
         resetCondition()
     }
+    @IBAction func touchUpYearButton(_ sender: UIButton){
+        let dropDown = DropDown()
+        dropDown.dataSource = ["2022","2023"]
+        dropDownAndChangeButtonText(dropDown, sender)
+        
+    }
+    
+    @IBAction func touchUpMonthButton(_ sender: UIButton){
+        let dropDown = DropDown()
+        dropDown.dataSource = {
+            var temp: [String] = []
+            for i in 1...12 {
+                temp.append(String(i))
+            }
+            return temp
+        }()
+        dropDownAndChangeButtonText(dropDown, sender)
+    }
+    
+    
     // MARK: - Method
+    func dropDownAndChangeButtonText(_ dropDown: DropDown, _ sender: UIButton){
+        dropDown.anchorView = sender
+        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+        dropDown.show()
+        dropDown.selectionAction = { [unowned self]  (index: Int, item: String) in
+            sender.setTitle(item, for: .normal)
+            sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
+        }
+    }
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -78,21 +116,73 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
     override func viewWillAppear(_ animated: Bool) {
         fetchAndReload()
     }
+    func showScrollView() {
+        view.addSubview(dayScroll)
+//        dayScroll.backgroundColor = UIColor.gray
+        dayScroll.snp.makeConstraints { make in
+            make.trailing.equalTo(-70)
+            make.leading.equalTo(150)
+            make.height.equalTo(35)
+        }
+        var stackView: UIStackView = {
+            let view = UIStackView()
+            view.axis = .horizontal
+            view.spacing = 0
+//            view.backgroundColor = .separator
+            
+            return view
+        }()
+        dayScroll.showsHorizontalScrollIndicator = false
+        dayScroll.addSubview(stackView)
+//        dayScroll.backgroundColor = UIColor.red
+//        stackView.backgroundColor = UIColor.blue
+        stackView.snp.makeConstraints{ make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        let day: [Int] = [1,2,3,4,5,6,7,8,9,9,1,2,3,4,5,6,7,8,9]
+        day.forEach{ data in
+            let button = UIButton()
+            button.setTitleColor(.blue, for: .normal)
+            button.setTitle(String(data), for: .normal)
+            stackView.addArrangedSubview(button)
+//            button.backgroundColor = .systemGreen
+            button.snp.makeConstraints{make in
+                                       make.height.equalTo(42)
+            }
+            button.addTarget(self, action: #selector(Test), for: .touchUpInside)
+            
+        }
+    }
+    @objc func Test(_ sender:UIButton){
+        print(sender.titleLabel?.text)
+//        day
+        day = Int(sender.titleLabel?.text ?? "1")
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        showScrollView()
         resetCondition()
         fetchAndReload()
+        print("\n\n\naadwadwddwd\n\n\n")
     }
     func resetCondition(){
         let nowDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let str = dateFormatter.string(from: nowDate)
+        var str = dateFormatter.string(from: nowDate)
         startDate.date = dateFormatter.date(from: str)!
         endDate.date = dateFormatter.date(from: str)!
         scheduleText.text = ""
         alarmSwitch.isOn = false
-        
+        dateFormatter.dateFormat = "yyyy:MM:dd"
+        str = dateFormatter.string(from: nowDate)
+        let arr = str.components(separatedBy: ":")
+        year = Int(arr[0])
+        month = Int(arr[1])
+        day = Int(arr[2])
+        print(year,month,day)
     }
     
     
@@ -106,13 +196,10 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
             print("Fatal error", err.localizedDescription)
         }
     }
-    
-
     func sendUpdate() {
             fetchAndReload()
         }
 
-        
     let dateFormatter: DateFormatter = {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "MM/dd HH:mm"
@@ -148,16 +235,9 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
         }
         return cell
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-//        cell.backgroundColor = UIColor.white
-//    }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        var state = 0
         var actions: [UIContextualAction] = []
-//        guard let cell: CustomTableViewCell? = tableView.cellForRow(at: indexPath) as? CustomTableViewCell else {
-//            return
-//        }
+
         let row = pm.fetchResultController.object(at: indexPath)
         let delete = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
             let alert = UIAlertController(title: "주의", message: "정말 삭제하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
@@ -183,17 +263,14 @@ class MainViewController: UIViewController,       UITableViewDelegate,UITableVie
                     (action) in
                     row.state = 1
                     row.alarm = false
-//                    self.pm.modifySchedule(NSInteger(row.id), nil, nil, nil, nil, nil,1)
                     self.fetchAndReload()
                 })
                 alert.addAction(alertCancel)
                 alert.addAction(alertOk)
-            
-        //        present(alert,animated: true, completion{})
+
                 self.present(alert, animated: false)
             })
             let modify = UIContextualAction(style: .normal, title: "수정", handler: {(action, view, completionHandler) in
-//                let pushVC = ModifyViewController()
                 guard let nextVC: ModifyViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModifyView") as? ModifyViewController else{
                     return
                 }
