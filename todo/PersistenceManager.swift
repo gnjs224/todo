@@ -17,6 +17,10 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         var re: [Int]
         var alarm: Bool
     }
+    var year: Int=2022
+    var day: Int=1
+    var month: Int = 25
+
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "TodoList")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in if let error = error as NSError? {
@@ -30,10 +34,20 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         return self.persistentContainer.viewContext
         
     }
-
     lazy var fetchResultController: NSFetchedResultsController<TodoList> = {
         let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy:MM:dd"
+        let dateString = "\(year):\(01):\(26)"
+        let fixDate = dateFormatter.date(from: dateString) as! NSDate
+//        let date = NSDate()
+        let predicate1 = NSPredicate(format: "start<=%@",fixDate)
+        let predicate2 = NSPredicate(format: "end>=%@",fixDate)
+        let predicate = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2])
+        fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start",ascending: false)]
+       
+        
         let fetchResult = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchResult.delegate = self
         return fetchResult

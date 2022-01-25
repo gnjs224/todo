@@ -9,18 +9,10 @@ import UIKit
 import CoreData
 import SnapKit
 import DropDown
-//protocol SendUpdateProtocol: AnyObject{
-//    func sendUpdated()
-//}
 class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
     
     static var shared: MainViewController = MainViewController()
-    // MARK: - Value
-//    lazy var dayScrollView: DayScrollView = {
-//        let view = DayScrollView()
-//        return view
-//    }()
-    
+    // MARK: - Outlet
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var scheduleText: UITextField!
@@ -30,12 +22,39 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var dayScroll: UIScrollView!
     weak var delegate: SendUpdateProtocol?
     let daysOfMonth:[Int:Int]! = [1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31]
-    
-    var year: Int!
-    var month: Int!
-    var day: Int!
+    var stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+//            view.backgroundColor = .separator
+        
+        return view
+    }()
+    var year: Int = 1 {
+        didSet{
+            pm.year = year
+        }
+    }
+    var days: [Int] = []
+    var month: Int = 1 {
+        didSet{
+            days = []
+            for i in 1...daysOfMonth[month]! {
+                days.append(i)
+            }
+//            dayScroll.removeFromSuperview()
+            fetchAndReload()
+            showScrollView()
+            pm.month = month
+        }
+    }
+    var day: Int = 1{
+        didSet{
+            pm.day = day
+        }
+    }
 
-    let pm = PersistenceManager.shared
+    var pm: PersistenceManager!
 //    let tm = MainTableViewController()
     var i = 0
     // MARK: - Action
@@ -72,8 +91,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBAction func touchUpYearButton(_ sender: UIButton){
         let dropDown = DropDown()
         dropDown.dataSource = ["2022","2023"]
-        dropDownAndChangeButtonText(dropDown, sender)
-        
+        dropDownAndChangeButtonText(dropDown, sender,"year")
     }
     
     @IBAction func touchUpMonthButton(_ sender: UIButton){
@@ -85,19 +103,27 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             }
             return temp
         }()
-        dropDownAndChangeButtonText(dropDown, sender)
+        dropDownAndChangeButtonText(dropDown, sender,"month")
     }
     
     
     // MARK: - Method
-    func dropDownAndChangeButtonText(_ dropDown: DropDown, _ sender: UIButton){
+    func dropDownAndChangeButtonText(_ dropDown: DropDown, _ sender: UIButton, _ type:String){
         dropDown.anchorView = sender
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.show()
-        dropDown.selectionAction = { [unowned self]  (index: Int, item: String) in
+        dropDown.selectionAction = {[weak self](index: Int, item: String) in
             sender.setTitle(item, for: .normal)
             sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
+            if type == "year" {
+                self?.year = Int(item)!
+            }else {
+                self?.month = Int(item)!
+                self?.days = [1,2]
+            }
+            self?.fetchAndReload()
         }
+        
     }
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
@@ -118,30 +144,29 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }
     func showScrollView() {
         view.addSubview(dayScroll)
-//        dayScroll.backgroundColor = UIColor.gray
+        dayScroll.backgroundColor = UIColor.gray
         dayScroll.snp.makeConstraints { make in
             make.trailing.equalTo(-70)
             make.leading.equalTo(150)
             make.height.equalTo(35)
         }
-        var stackView: UIStackView = {
-            let view = UIStackView()
-            view.axis = .horizontal
-            view.spacing = 0
-//            view.backgroundColor = .separator
-            
-            return view
-        }()
         dayScroll.showsHorizontalScrollIndicator = false
+        stackView.arrangedSubviews.forEach { child in
+            stackView.removeArrangedSubview(child)
+            child.removeFromSuperview()
+        }
         dayScroll.addSubview(stackView)
-//        dayScroll.backgroundColor = UIColor.red
-//        stackView.backgroundColor = UIColor.blue
         stackView.snp.makeConstraints{ make in
             make.leading.trailing.equalToSuperview()
             make.height.equalToSuperview()
         }
-        let day: [Int] = [1,2,3,4,5,6,7,8,9,9,1,2,3,4,5,6,7,8,9]
-        day.forEach{ data in
+        updateDays(stackView)
+        
+    }
+    func updateDays(_ stackView: UIStackView ){
+
+
+        days.forEach{ data in
             let button = UIButton()
             button.setTitleColor(.blue, for: .normal)
             button.setTitle(String(data), for: .normal)
@@ -150,20 +175,23 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             button.snp.makeConstraints{make in
                                        make.height.equalTo(42)
             }
-            button.addTarget(self, action: #selector(Test), for: .touchUpInside)
+            button.addTarget(self, action: #selector(touchUpDayButton(_:)), for: .touchUpInside)
             
         }
+        
     }
-    @objc func Test(_ sender:UIButton){
-        print(sender.titleLabel?.text)
+    @objc func touchUpDayButton(_ sender:UIButton){
+//        print(sender.titleLabel?.text!)
 //        day
-        day = Int(sender.titleLabel?.text ?? "1")
+        day = Int(sender.titleLabel?.text ?? "1")!
+        fetchAndReload()
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        showScrollView()
+        pm = PersistenceManager.shared
         resetCondition()
+        
         fetchAndReload()
         print("\n\n\naadwadwddwd\n\n\n")
     }
@@ -179,22 +207,27 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dateFormatter.dateFormat = "yyyy:MM:dd"
         str = dateFormatter.string(from: nowDate)
         let arr = str.components(separatedBy: ":")
-        year = Int(arr[0])
-        month = Int(arr[1])
-        day = Int(arr[2])
-        print(year,month,day)
+        year = Int(arr[0])!
+        month = Int(arr[1])!
+        day = Int(arr[2])!
+//        print(year,month,day)
     }
     
     
     // MARK: - 테이블 뷰
     func fetchAndReload(){
+        
         do{
             try pm.fetchResultController.performFetch()
             todoTable.reloadData()
-            print("fetch success")
+            print("\n\n\nfetch success \(pm.year)년 \(pm.month)월 \(pm.day)일\n\n\n")
         }catch let err{
             print("Fatal error", err.localizedDescription)
         }
+        
+        
+        
+        
     }
     func sendUpdate() {
             fetchAndReload()
