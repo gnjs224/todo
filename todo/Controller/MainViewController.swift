@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import SnapKit
 import DropDown
-class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol{
+class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate, SendUpdateProtocol, ChangeDateProtocol{
     
     static var shared: MainViewController = MainViewController()
     // MARK: - Outlet
@@ -21,16 +21,14 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var todoTable: UITableView!
     @IBOutlet weak var dayScroll: UIScrollView!
     @IBOutlet weak var monthButton: UIButton!
-    
-    weak var delegate: SendUpdateProtocol?
-    var pm: PersistenceManager!
+    @IBOutlet weak var yearButton: UIButton!
+//    weak var delegate: SendUpdateProtocol?
+    var pm: PersistenceManager = PersistenceManager.shared
     let daysOfMonth:[Int:Int]! = [1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31]
     var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 0
-//            view.backgroundColor = .separator
-        
+        view.spacing = 5
         return view
     }()
     var year: Int = 1 {
@@ -45,7 +43,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             for i in 1...daysOfMonth[month]! {
                 days.append(i)
             }
-//            dayScroll.removeFromSuperview()
             fetchAndReload()
             showScrollView()
             pm.updateDate(month, "month")
@@ -54,25 +51,20 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     var day: Int = 1{
         didSet{
             pm.updateDate(day, "day")
+            print(dayScroll.contentOffset)
+//            dayScroll.setContentOffset(CGPoint(x: (day <= 9 ? day * day * 2 : day * 20), y: 0), animated: true)
         }
     }
-
-
-//    let tm = MainTableViewController()
+    var selectedDayButton: UIButton?
     var i = 0
     // MARK: - Action
     
     @IBAction func touchUpAddButton(_ sender: UIButton){
-        //유저디폴트로 문자로입력 on인지 off인지 확인
-        
-        print("시작:", startDate.date)
-        print("종료:", endDate.date)
-        print("내용: ", scheduleText.text!)
-        print("반복: ", alarmSwitch.isOn)//?
-        print("알람: ", alarmSwitch.isOn)
-        //날짜 키워드
-        //오늘, 내일, 모레, 년, 월, 일, 요일 이번주, 다음주, 다다음주, 3주뒤 4주뒤 요일, 다음달, 매달, 매일, 매주
-        //우선 날짜선택하는거로 ?
+//        print("시작:", startDate.date)
+//        print("종료:", endDate.date)
+//        print("내용: ", scheduleText.text!)
+//        print("반복: ", alarmSwitch.isOn)//?
+//        print("알람: ", alarmSwitch.isOn)
         if endDate.date < startDate.date {
             showToast(message: "에러: 시작 > 종료")
         }else{
@@ -96,7 +88,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dropDown.dataSource = ["2022","2023"]
         dropDownAndChangeButtonText(dropDown, sender,"year")
     }
-    
     @IBAction func touchUpMonthButton(_ sender: UIButton){
         let dropDown = DropDown()
         dropDown.dataSource = {
@@ -107,6 +98,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             return temp
         }()
         dropDownAndChangeButtonText(dropDown, sender,"month")
+        
     }
     
     
@@ -116,7 +108,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.show()
         dropDown.selectionAction = {[weak self](index: Int, item: String) in
-            sender.setTitle(item, for: .normal)
+            sender.setTitle("\(item)"+(type == "month" ? "월":"년"), for: .normal)
             sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
             if type == "year" {
                 self?.year = Int(item)!
@@ -142,18 +134,33 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         UIView.animate(withDuration: 10.0, delay: 0.1, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
         
     }
+    func changeDate(_ yyyy:Int, _ mm:String, _ dd: String){
+        print("asd")
+        let nowDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        var str = dateFormatter.string(from: nowDate)
+        str += ":\(yyyy):\(mm):\(dd)"
+        dateFormatter.dateFormat = "HH:mm:yyyy:MM:dd"
+        let result = dateFormatter.date(from: str)!
+        print(result,year,month,day)
+        startDate?.date = result
+        endDate?.date = result
+    }
     override func viewWillAppear(_ animated: Bool) {
         fetchAndReload()
     }
     func showScrollView() {
         view.addSubview(dayScroll)
-        dayScroll.backgroundColor = UIColor.gray
+//        dayScroll.backgroundColor = UIColor.gray
         dayScroll.snp.makeConstraints { make in
             make.trailing.equalTo(-70)
-            make.leading.equalTo(150)
+            make.leading.equalTo(130)
             make.height.equalTo(35)
+            make.top.equalTo(45)
         }
         dayScroll.showsHorizontalScrollIndicator = false
+
         stackView.arrangedSubviews.forEach { child in
             stackView.removeArrangedSubview(child)
             child.removeFromSuperview()
@@ -164,19 +171,27 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             make.height.equalToSuperview()
         }
         updateDays(stackView)
+
         
     }
     func updateDays(_ stackView: UIStackView ){
-
-
         days.forEach{ data in
             let button = UIButton()
-            button.setTitleColor(.blue, for: .normal)
+            if data == day {
+                button.setTitleColor(.red, for: .normal)
+                selectedDayButton = button
+            }else{
+                button.setTitleColor(.blue, for: .normal)
+            }
+            button.layer.cornerRadius = 12
+            button.backgroundColor = UIColor.orange
             button.setTitle(String(data), for: .normal)
             stackView.addArrangedSubview(button)
-//            button.backgroundColor = .systemGreen
+            
             button.snp.makeConstraints{make in
-                                       make.height.equalTo(42)
+                make.height.width.equalTo(30)
+
+//                make.left.equalTo(1)
             }
             button.addTarget(self, action: #selector(touchUpDayButton(_:)), for: .touchUpInside)
             
@@ -184,40 +199,52 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         
     }
     @objc func touchUpDayButton(_ sender:UIButton){
-//        print(sender.titleLabel?.text!)
-//        day
+        selectedDayButton?.setTitleColor(.blue, for: .normal)
+        selectedDayButton = sender
+        sender.setTitleColor(.red, for: .normal)
         day = Int(sender.titleLabel?.text ?? "1")!
         fetchAndReload()
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        pm = PersistenceManager.shared
+        pm.delegate = self
+//        pm = PersistenceManager.shared
         resetCondition()
-        fetchAndReload()
-        print("\n\n\naadwadwddwd\n\n\n")
+
+        
     }
     func resetCondition(){
         let nowDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         var str = dateFormatter.string(from: nowDate)
-        startDate.date = dateFormatter.date(from: str)!
-        endDate.date = dateFormatter.date(from: str)!
-        scheduleText.text = ""
-        alarmSwitch.isOn = false
+        let result = dateFormatter.date(from: str)!
+        startDate.date = result
+        endDate.date = result
+//        scheduleText.text = ""
+//        alarmSwitch.isOn = false
         dateFormatter.dateFormat = "yyyy:MM:dd"
         str = dateFormatter.string(from: nowDate)
         let arr = str.components(separatedBy: ":")
         
-
         year = Int(arr[0])!
         month = Int(arr[1])!
         day = Int(arr[2])!
-        monthButton.setTitle(String(month), for: .normal)
-//        print(year,month,day)
+        monthButton.setTitle(String(month)+"월", for: .normal)
+        yearButton.setTitle(String(year)+"년", for: .normal)
+        
+        setWeekDay()
+        
+        fetchAndReload()
+        showScrollView()
     }
     
+    func setWeekDay(){
+        let dateFormatter = DateFormatter()
+//        let year = Calendar.current.component(.year, from: today)
+        print("\n\n",year)
+    }
     
     // MARK: - 테이블 뷰
     func fetchAndReload(){
@@ -231,8 +258,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }
     func sendUpdate() {
             fetchAndReload()
-        }
-
+    }
     let dateFormatter: DateFormatter = {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "MM/dd HH:mm"
@@ -261,7 +287,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         cell.accessoryView = alarmTableSwitch
         
         if row.state == 1 {
-            cell.backgroundColor = UIColor.gray
+//            cell.backgroundColor = UIColor.gray
             alarmTableSwitch.isEnabled = false
         }else{
             cell.backgroundColor = UIColor.white

@@ -4,7 +4,7 @@
         <attribute name="alarm" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="re" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
+        <attribute name="re" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="todo" optional="YES" attributeType="String"/>

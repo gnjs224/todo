@@ -7,9 +7,12 @@
 
 import UIKit
 import CoreData
+protocol ChangeDateProtocol : AnyObject{
+    func changeDate(_ yyyy:Int, _ mm:String, _ dd: String)
+}
 class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
-    
     static var shared: PersistenceManager = PersistenceManager()
+    weak var delegate: ChangeDateProtocol?
     struct Schedule {
         var start: Date
         var end: Date
@@ -17,8 +20,8 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         var re: [Int]
         var alarm: Bool
     }
-    lazy var year: Int=1111
-    lazy var day: Int=11
+    lazy var year: Int = 1111
+    lazy var day: Int = 11
     lazy var month: Int = 1
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -40,9 +43,9 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         dateFormatter.dateFormat = "yyyy:MM:dd:HH:mm"
         let stringMonth = String(format: "%02d", month)
         let stringDay = String(format: "%02d", day)
-        print("\n\n\n\n",stringMonth,stringDay,year)
-        let date1 = dateFormatter.date(from: "\(year):\(stringMonth):\(stringDay):\(23):\(59)") as! NSDate
-        let date2 = dateFormatter.date(from: "\(year):\(stringMonth):\(stringDay):\(00):\(00)") as! NSDate
+        print(stringMonth,stringDay,year)
+        let date1 = dateFormatter.date(from: "\(year):\(stringMonth):\(stringDay):\(23):\(59)")! as NSDate
+        let date2 = dateFormatter.date(from: "\(year):\(stringMonth):\(stringDay):\(00):\(00)")! as NSDate
         let predicate1 = NSPredicate(format: "start<=%@",date1)
         let predicate2 = NSPredicate(format: "end>=%@",date2)
         let predicate = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2])
@@ -63,8 +66,10 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         if type == "day" {
             day = value
         }
-        print("\n\n\n\\n\n\n",year,month,day)
+        let stringMonth = String(format: "%02d", month)
+        let stringDay = String(format: "%02d", day)
         fetchResultController = initFetchResultController()
+        delegate?.changeDate(year,stringMonth,stringDay)
         
     }
     func insertSchedule(_ schedule: Schedule){
