@@ -20,7 +20,10 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var todoTable: UITableView!
     @IBOutlet weak var dayScroll: UIScrollView!
+    @IBOutlet weak var monthButton: UIButton!
+    
     weak var delegate: SendUpdateProtocol?
+    var pm: PersistenceManager!
     let daysOfMonth:[Int:Int]! = [1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31]
     var stackView: UIStackView = {
         let view = UIStackView()
@@ -32,7 +35,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }()
     var year: Int = 1 {
         didSet{
-            pm.year = year
+            pm.updateDate(year, "year")
         }
     }
     var days: [Int] = []
@@ -45,16 +48,16 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 //            dayScroll.removeFromSuperview()
             fetchAndReload()
             showScrollView()
-            pm.month = month
+            pm.updateDate(month, "month")
         }
     }
     var day: Int = 1{
         didSet{
-            pm.day = day
+            pm.updateDate(day, "day")
         }
     }
 
-    var pm: PersistenceManager!
+
 //    let tm = MainTableViewController()
     var i = 0
     // MARK: - Action
@@ -191,7 +194,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         super.viewDidLoad()
         pm = PersistenceManager.shared
         resetCondition()
-        
         fetchAndReload()
         print("\n\n\naadwadwddwd\n\n\n")
     }
@@ -207,9 +209,12 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dateFormatter.dateFormat = "yyyy:MM:dd"
         str = dateFormatter.string(from: nowDate)
         let arr = str.components(separatedBy: ":")
+        
+
         year = Int(arr[0])!
         month = Int(arr[1])!
         day = Int(arr[2])!
+        monthButton.setTitle(String(month), for: .normal)
 //        print(year,month,day)
     }
     
@@ -218,16 +223,11 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     func fetchAndReload(){
         
         do{
-            try pm.fetchResultController.performFetch()
+            try  pm.fetchResultController.performFetch()
             todoTable.reloadData()
-            print("\n\n\nfetch success \(pm.year)년 \(pm.month)월 \(pm.day)일\n\n\n")
         }catch let err{
             print("Fatal error", err.localizedDescription)
         }
-        
-        
-        
-        
     }
     func sendUpdate() {
             fetchAndReload()
@@ -239,7 +239,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         return formatter
     }()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pm.fetchResultController.sections?[0].numberOfObjects ?? 1
+        return pm.fetchResultController.sections?[0].numberOfObjects ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell

@@ -300,6 +300,7 @@
                         <outlet property="alarmSwitch" destination="m1D-DI-717" id="0Mq-p4-gDx"/>
                         <outlet property="dayScroll" destination="ICI-oE-BI3" id="WuG-qw-0gS"/>
                         <outlet property="endDate" destination="MfI-VB-635" id="K3N-hF-5df"/>
+                        <outlet property="monthButton" destination="xzM-jt-2RT" id="lmL-JF-SCM"/>
                         <outlet property="scheduleText" destination="wWO-MA-chh" id="dQb-FH-aE2"/>
                         <outlet property="startDate" destination="e8q-uV-Dus" id="s5V-CY-eLo"/>
                         <outlet property="todoTable" destination="Qwn-96-sM1" id="2sk-Y5-ABe"/>
