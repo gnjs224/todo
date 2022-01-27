@@ -48,6 +48,10 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         let date2 = dateFormatter.date(from: "\(year):\(stringMonth):\(stringDay):\(00):\(00)")! as NSDate
         let predicate1 = NSPredicate(format: "start<=%@",date1)
         let predicate2 = NSPredicate(format: "end>=%@",date2)
+//        let predicate3 = NSPredicate(format: "re CONTAINS[c]",weekday)
+//        let predicate4 = NSPredicate(format: "re is empty",weekday)
+//        위 두개 or
+        
         let predicate = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2])
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "end",ascending: true),NSSortDescriptor(key: "start",ascending: true)]

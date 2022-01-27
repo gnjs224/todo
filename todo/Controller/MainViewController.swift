@@ -75,6 +75,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 //            dayScroll.setContentOffset(CGPoint(x: (day <= 9 ? day * day * 2 : day * 20), y: 0), animated: true)
         }
     }
+    var dayOfWeek = 1 //월: 1  일: 7
     var selectedDayButton: UIButton?
     var i = 0
     // MARK: - Action
@@ -303,9 +304,9 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dateFormatter.dateFormat = "yyyyMMdd"
 //        let stringMonth =
         let now = dateFormatter.date(from: "\(year)\(String(format: "%02d", month))\(String(format: "%02d", day))")
-        let dayIndex = Calendar.current.component(.weekday, from: now!)
+        dayOfWeek = Calendar.current.component(.weekday, from: now!)
         let weekdays = ["일","월","화","수","목","금","토"]
-        dayOfWeekLabel.text = weekdays[dayIndex-1]+"요일"
+        dayOfWeekLabel.text = weekdays[dayOfWeek-1]+"요일"
         
     }
     
@@ -331,8 +332,17 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pm.fetchResultController.sections?[0].numberOfObjects ?? 0
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let row = pm.fetchResultController.object(at: indexPath)
+        if !((row.re?.isEmpty) ?? true || (!(row.re?.contains(dayOfWeek-1) ?? true))) {
+            return 0
+        }//달력 구현 후 테스트
+
+        return tableView.rowHeight
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        
         let row = pm.fetchResultController.object(at: indexPath)
         cell.startLabel.text = self.dateFormatter.string(from: row.start!)
         cell.endLabel.text = self.dateFormatter.string(from: row.end!)
