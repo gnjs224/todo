@@ -75,11 +75,6 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-DI-717">
                                 <rect key="frame" x="335" y="231.5" width="51" height="31"/>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jU-Ex-50w">
-                                <rect key="frame" x="300" y="279.5" width="94" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrow.down.backward.square" catalog="system" title="정렬기준"/>
-                            </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="e8q-uV-Dus">
                                 <rect key="frame" x="47" y="81" width="320" height="50"/>
                                 <constraints>
@@ -95,12 +90,6 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="반복" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdc-zc-vfe">
                                 <rect key="frame" x="30" y="235" width="35" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="월 화 수 목 금 토 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVE-ws-QC8">
-                                <rect key="frame" x="95" y="237" width="129.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -180,9 +169,9 @@
                                 </segments>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28x-md-9q7">
-                                <rect key="frame" x="20" y="279.5" width="81.5" height="31"/>
+                                <rect key="frame" x="20" y="279.5" width="110" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="오늘로"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="조건 초기화"/>
                                 <connections>
                                     <action selector="touchUpResetConditionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3iu-55-tfT"/>
                                 </connections>
@@ -208,7 +197,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-Je-w50">
-                                <rect key="frame" x="286" y="188" width="108" height="31"/>
+                                <rect key="frame" x="286" y="279" width="108" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="format test"/>
@@ -216,29 +205,119 @@
                                     <action selector="deleteTest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KWM-vP-Y4H"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQX-N9-2nt">
+                                <rect key="frame" x="95" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="o6R-K1-yif"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="화"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dK1-D6-ENA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-Mj-fO8">
+                                <rect key="frame" x="155" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="fPj-w6-NMB"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="금"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="crK-ba-bIZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIn-gF-2WI">
+                                <rect key="frame" x="175" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="MsO-5z-gnc"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="토"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j9U-zg-dq5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pm-hL-9Wv">
+                                <rect key="frame" x="195" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="n5b-6h-3Ol"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="일"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iFj-0R-L0k"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqk-lh-okW">
+                                <rect key="frame" x="115" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="6wH-gz-puI"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="수"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mdh-Ry-LAH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbA-WJ-C56">
+                                <rect key="frame" x="135" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="nQs-Cv-XFu"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="목"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kgf-1b-SLq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6e-jy-mHy">
+                                <rect key="frame" x="75" y="231.5" width="20" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="tlx-3l-NNs"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="월"/>
+                                <connections>
+                                    <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5SL-a8-2hL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="WVE-ws-QC8" firstAttribute="leading" secondItem="Mdc-zc-vfe" secondAttribute="trailing" constant="30" id="11K-r9-eGp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="63E-ut-9Do" secondAttribute="trailing" constant="30" id="1dZ-AK-H7P"/>
-                            <constraint firstItem="Qyq-UI-MpN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="1fg-9w-7zl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3jP-4y-rEi" secondAttribute="trailing" constant="20" id="41x-SO-Edq"/>
+                            <constraint firstItem="7pm-hL-9Wv" firstAttribute="centerY" secondItem="wIn-gF-2WI" secondAttribute="centerY" id="4zX-G3-tq6"/>
+                            <constraint firstItem="vQX-N9-2nt" firstAttribute="leading" secondItem="Z6e-jy-mHy" secondAttribute="trailing" id="5TW-x1-dgk"/>
                             <constraint firstItem="28x-md-9q7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="77R-t7-qVU"/>
                             <constraint firstItem="jwC-Ea-OUr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="3" id="7Tt-4i-Gwf"/>
+                            <constraint firstItem="aW2-Mj-fO8" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="9Ba-SS-zTL"/>
                             <constraint firstItem="wWO-MA-chh" firstAttribute="leading" secondItem="aSz-y9-M8k" secondAttribute="trailing" constant="10" id="CRx-Ec-ngW"/>
                             <constraint firstItem="xzM-jt-2RT" firstAttribute="centerY" secondItem="jwC-Ea-OUr" secondAttribute="centerY" id="EjC-rj-7gT"/>
                             <constraint firstItem="eTG-Y3-dVa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="FBw-w3-6rB"/>
                             <constraint firstItem="m1D-DI-717" firstAttribute="leading" secondItem="HFq-eT-L6C" secondAttribute="trailing" constant="10" id="GtJ-lp-beg"/>
                             <constraint firstItem="HFq-eT-L6C" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="HJs-Cd-afK"/>
                             <constraint firstItem="Qwn-96-sM1" firstAttribute="top" secondItem="63E-ut-9Do" secondAttribute="bottom" id="HpN-NV-Els"/>
+                            <constraint firstItem="pn6-92-tXF" firstAttribute="top" secondItem="wIn-gF-2WI" secondAttribute="bottom" constant="7" id="KLu-MK-FRE"/>
                             <constraint firstItem="wWO-MA-chh" firstAttribute="centerY" secondItem="aSz-y9-M8k" secondAttribute="centerY" id="KVb-gT-y4I"/>
                             <constraint firstItem="MfI-VB-635" firstAttribute="top" secondItem="e8q-uV-Dus" secondAttribute="bottom" id="Kbf-SY-kbx"/>
                             <constraint firstItem="jwC-Ea-OUr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LxZ-Zw-ugJ"/>
+                            <constraint firstItem="Qyq-UI-MpN" firstAttribute="top" secondItem="jwC-Ea-OUr" secondAttribute="bottom" constant="12" id="ORG-O0-IjS"/>
+                            <constraint firstItem="7pm-hL-9Wv" firstAttribute="leading" secondItem="wIn-gF-2WI" secondAttribute="trailing" id="P18-3N-Rlq"/>
+                            <constraint firstItem="aW2-Mj-fO8" firstAttribute="leading" secondItem="lbA-WJ-C56" secondAttribute="trailing" id="P8B-AB-tu9"/>
+                            <constraint firstItem="Z6e-jy-mHy" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="Pc7-Tu-m7E"/>
                             <constraint firstItem="aSz-y9-M8k" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Qs7-Of-9pq"/>
+                            <constraint firstItem="lbA-WJ-C56" firstAttribute="centerY" secondItem="fqk-lh-okW" secondAttribute="centerY" id="SPP-MH-t3y"/>
                             <constraint firstItem="Qyq-UI-MpN" firstAttribute="centerY" secondItem="e8q-uV-Dus" secondAttribute="centerY" id="UmM-zo-Vza"/>
                             <constraint firstItem="Qyq-UI-MpN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="VoW-n4-T2d"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1jU-Ex-50w" secondAttribute="trailing" constant="20" id="X2W-EC-YGu"/>
                             <constraint firstItem="Mdc-zc-vfe" firstAttribute="top" secondItem="aSz-y9-M8k" secondAttribute="bottom" constant="20" id="Y5l-1l-EOn"/>
                             <constraint firstItem="63E-ut-9Do" firstAttribute="top" secondItem="pn6-92-tXF" secondAttribute="bottom" constant="15" id="Y62-U7-AjB"/>
                             <constraint firstItem="MfI-VB-635" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YT4-li-e7o"/>
@@ -247,21 +326,25 @@
                             <constraint firstItem="Qwn-96-sM1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="aTR-iS-dbg"/>
                             <constraint firstItem="Qwn-96-sM1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cB2-hh-xC0"/>
                             <constraint firstItem="Mdc-zc-vfe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="dUb-Ud-Stf"/>
+                            <constraint firstItem="wIn-gF-2WI" firstAttribute="leading" secondItem="aW2-Mj-fO8" secondAttribute="trailing" id="dc3-bA-kCo"/>
+                            <constraint firstItem="wIn-gF-2WI" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="ds6-cB-RU9"/>
                             <constraint firstItem="pn6-92-tXF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fVQ-4F-s8Y"/>
                             <constraint firstItem="xzM-jt-2RT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="izW-MW-wgg"/>
                             <constraint firstItem="63E-ut-9Do" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kSe-0W-8wO"/>
-                            <constraint firstItem="pn6-92-tXF" firstAttribute="top" secondItem="WVE-ws-QC8" secondAttribute="bottom" constant="12" id="kT6-ap-J61"/>
                             <constraint firstItem="aSz-y9-M8k" firstAttribute="top" secondItem="MfI-VB-635" secondAttribute="bottom" constant="10" id="kT7-1H-7is"/>
-                            <constraint firstItem="WVE-ws-QC8" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="lbM-bD-gof"/>
+                            <constraint firstItem="lbA-WJ-C56" firstAttribute="leading" secondItem="fqk-lh-okW" secondAttribute="trailing" id="lbk-mp-chW"/>
                             <constraint firstItem="m1D-DI-717" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="nAh-P0-Aup"/>
                             <constraint firstItem="63E-ut-9Do" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="ngU-kr-nV3"/>
-                            <constraint firstItem="1jU-Ex-50w" firstAttribute="centerY" secondItem="28x-md-9q7" secondAttribute="centerY" id="oGQ-Qv-ifX"/>
+                            <constraint firstItem="fqk-lh-okW" firstAttribute="leading" secondItem="vQX-N9-2nt" secondAttribute="trailing" id="q7n-yp-RwM"/>
                             <constraint firstItem="eTG-Y3-dVa" firstAttribute="centerY" secondItem="MfI-VB-635" secondAttribute="centerY" id="rOj-sy-rDl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qwn-96-sM1" secondAttribute="bottom" id="sKZ-Mx-Aya"/>
                             <constraint firstItem="3jP-4y-rEi" firstAttribute="centerY" secondItem="jwC-Ea-OUr" secondAttribute="centerY" id="sY0-HV-fdT"/>
                             <constraint firstItem="wWO-MA-chh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tdl-PC-Gm2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qwn-96-sM1" secondAttribute="bottom" id="v1n-gI-8sS"/>
+                            <constraint firstItem="vQX-N9-2nt" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="vHJ-uL-5gq"/>
+                            <constraint firstItem="fqk-lh-okW" firstAttribute="centerY" secondItem="Mdc-zc-vfe" secondAttribute="centerY" id="vR9-VW-FBz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m1D-DI-717" secondAttribute="trailing" constant="30" id="wkD-hS-qfr"/>
+                            <constraint firstItem="Z6e-jy-mHy" firstAttribute="leading" secondItem="Mdc-zc-vfe" secondAttribute="trailing" constant="10" id="wyF-Ig-nCt"/>
                             <constraint firstItem="pn6-92-tXF" firstAttribute="centerY" secondItem="28x-md-9q7" secondAttribute="centerY" id="z5k-ZC-Naa"/>
                         </constraints>
                     </view>
@@ -271,12 +354,20 @@
                     </navigationItem>
                     <connections>
                         <outlet property="alarmSwitch" destination="m1D-DI-717" id="0Mq-p4-gDx"/>
+                        <outlet property="dayOfWeekLabel" destination="3jP-4y-rEi" id="tpF-BM-76A"/>
                         <outlet property="dayScroll" destination="ICI-oE-BI3" id="WuG-qw-0gS"/>
                         <outlet property="endDate" destination="MfI-VB-635" id="K3N-hF-5df"/>
+                        <outlet property="fri" destination="aW2-Mj-fO8" id="deh-V8-sbb"/>
+                        <outlet property="mon" destination="Z6e-jy-mHy" id="IX8-uW-zK3"/>
                         <outlet property="monthButton" destination="xzM-jt-2RT" id="lmL-JF-SCM"/>
+                        <outlet property="sat" destination="wIn-gF-2WI" id="mhQ-mN-2c7"/>
                         <outlet property="scheduleText" destination="wWO-MA-chh" id="dQb-FH-aE2"/>
                         <outlet property="startDate" destination="e8q-uV-Dus" id="s5V-CY-eLo"/>
+                        <outlet property="sun" destination="7pm-hL-9Wv" id="NIQ-zP-Xnz"/>
+                        <outlet property="thi" destination="lbA-WJ-C56" id="Zws-Uc-bOh"/>
                         <outlet property="todoTable" destination="Qwn-96-sM1" id="2sk-Y5-ABe"/>
+                        <outlet property="tue" destination="vQX-N9-2nt" id="i5g-hW-OkC"/>
+                        <outlet property="wed" destination="fqk-lh-okW" id="4lQ-pB-V2D"/>
                         <outlet property="yearButton" destination="jwC-Ea-OUr" id="Y7u-HF-APy"/>
                     </connections>
                 </viewController>
@@ -512,7 +603,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.down.backward.square" catalog="system" width="128" height="114"/>
         <image name="arrow.up.forward.circle" catalog="system" width="128" height="121"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
@@ -523,6 +613,9 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

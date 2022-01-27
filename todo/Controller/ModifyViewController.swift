@@ -23,6 +23,7 @@ class ModifyViewController: UIViewController, NSFetchedResultsControllerDelegate
     @IBOutlet weak var ModifyRe: UIDatePicker!
     @IBOutlet weak var ModifyAlarm: UISwitch!
 
+
     override func viewWillAppear(_ animated: Bool) {
         ModifyStart.date = startToSet!
         ModifyEnd.date = endToSet!

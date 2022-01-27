@@ -93,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				78516D57278D770B00F5A394 /* Main.storyboard */,
+				78189590279506250055F9FE /* CustomTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -126,7 +127,6 @@
 				78516D53278D770B00F5A394 /* SceneDelegate.swift */,
 				7891879F278EB338001B8A7B /* TodoList.xcdatamodeld */,
 				78516D5A278D770B00F5A394 /* Assets.xcassets */,
-				78189590279506250055F9FE /* CustomTableViewCell.swift */,
 				78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */,
 				789187CA278FFBC2001B8A7B /* PersistenceManager.swift */,
 			);

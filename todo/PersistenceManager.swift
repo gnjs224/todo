@@ -50,7 +50,7 @@ class PersistenceManager: NSManagedObject,NSFetchedResultsControllerDelegate {
         let predicate2 = NSPredicate(format: "end>=%@",date2)
         let predicate = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2])
         fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start",ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "end",ascending: true),NSSortDescriptor(key: "start",ascending: true)]
         
         let fetchResult = NSFetchedResultsController<TodoList>(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchResult.delegate = self

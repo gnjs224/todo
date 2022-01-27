@@ -16,13 +16,30 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var scheduleText: UITextField!
-    @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
+//    @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var todoTable: UITableView!
     @IBOutlet weak var dayScroll: UIScrollView!
     @IBOutlet weak var monthButton: UIButton!
     @IBOutlet weak var yearButton: UIButton!
+    @IBOutlet weak var dayOfWeekLabel: UILabel!
+    @IBOutlet weak var mon: UIButton!
+    @IBOutlet weak var tue: UIButton!
+    @IBOutlet weak var wed: UIButton!
+    @IBOutlet weak var thi: UIButton!
+    @IBOutlet weak var fri: UIButton!
+    @IBOutlet weak var sat: UIButton!
+    @IBOutlet weak var sun: UIButton!
 //    weak var delegate: SendUpdateProtocol?
+    var monChecked: Bool! = false
+    var tueChecked: Bool! = false
+    var wedChecked: Bool! = false
+    var thuChecked: Bool! = false
+    var friChecked: Bool! = false
+    var satChecked: Bool! = false
+    var sunChecked: Bool! = false
+    var dayButtonArray: [UIButton]?
+    //MARK: - Value
     var pm: PersistenceManager = PersistenceManager.shared
     let daysOfMonth:[Int:Int]! = [1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31]
     var stackView: UIStackView = {
@@ -42,6 +59,9 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             days = []
             for i in 1...daysOfMonth[month]! {
                 days.append(i)
+            }
+            if day > days.last!{
+                day = days.last!
             }
             fetchAndReload()
             showScrollView()
@@ -65,16 +85,33 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 //        print("내용: ", scheduleText.text!)
 //        print("반복: ", alarmSwitch.isOn)//?
 //        print("알람: ", alarmSwitch.isOn)
-        if endDate.date < startDate.date {
+        
+    
+        if endDate.date < startDate.date { // 제약조건
             showToast(message: "에러: 시작 > 종료")
-        }else{
-            let schedule = PersistenceManager.Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: [0,1,2,3], alarm: alarmSwitch.isOn)
+        }else{ //실행
+            var re: [Int] = []
+            for (i,button) in dayButtonArray!.enumerated(){
+                if button.titleColor(for: .normal) == UIColor.red{
+                    re.append(i)
+                }
+            }
+            let schedule = PersistenceManager.Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: re, alarm: alarmSwitch.isOn)
             pm.insertSchedule(schedule)
-
             fetchAndReload()
         }
 //        resetCondition()
 
+    }
+    @IBAction func touchUpWeekButton(_ sender: UIButton!){
+//        print(dayButtonArray)
+//        print(sender.tintColor)
+        if sender.titleColor(for: .normal) == UIColor.systemBlue {
+            setButtonColor(sender, UIColor.red)
+        }else{
+            setButtonColor(sender, UIColor.systemBlue)
+
+        }
     }
     @IBAction func deleteTest(_ sender: UIButton){
         pm.deleteSchedule(nil)
@@ -209,11 +246,24 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         pm.delegate = self
+        dayButtonArray = [mon,tue,wed,thi,fri,sat,sun]
+//        startDate.
 //        pm = PersistenceManager.shared
         resetCondition()
+//        fetchWeekStackView()
 
         
     }
+//    func fetchWeekStackView(){
+//        view.addSubview(weekStackView)
+//        dayScroll.backgroundColor = UIColor.gray
+//        weekStackView.snp.makeConstraints { make in
+//            make.trailing.equalTo(-70)
+//            make.leading.equalTo(130)
+//            make.height.equalTo(35)
+//            make.top.equalTo(200)
+//        }
+//    }
     func resetCondition(){
         let nowDate = Date()
         let dateFormatter = DateFormatter()
@@ -222,8 +272,8 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         let result = dateFormatter.date(from: str)!
         startDate.date = result
         endDate.date = result
-//        scheduleText.text = ""
-//        alarmSwitch.isOn = false
+        scheduleText.text = ""
+        alarmSwitch.isOn = false
         dateFormatter.dateFormat = "yyyy:MM:dd"
         str = dateFormatter.string(from: nowDate)
         let arr = str.components(separatedBy: ":")
@@ -234,24 +284,38 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         monthButton.setTitle(String(month)+"월", for: .normal)
         yearButton.setTitle(String(year)+"년", for: .normal)
         
-        setWeekDay()
-        
         fetchAndReload()
         showScrollView()
+        
+        for button in dayButtonArray!{
+            setButtonColor(button, UIColor.systemBlue)
+        }
+        
     }
-    
+    func setButtonColor(_ button: UIButton, _ color: UIColor){
+        print(button)
+        button.setTitle(button.titleLabel?.text!, for: .normal)
+        button.setTitleColor(color, for: .normal)
+        
+    }
     func setWeekDay(){
         let dateFormatter = DateFormatter()
-//        let year = Calendar.current.component(.year, from: today)
-        print("\n\n",year)
+        dateFormatter.dateFormat = "yyyyMMdd"
+//        let stringMonth =
+        let now = dateFormatter.date(from: "\(year)\(String(format: "%02d", month))\(String(format: "%02d", day))")
+        let dayIndex = Calendar.current.component(.weekday, from: now!)
+        let weekdays = ["일","월","화","수","목","금","토"]
+        dayOfWeekLabel.text = weekdays[dayIndex-1]+"요일"
+        
     }
     
-    // MARK: - 테이블 뷰
+    // MARK: - TableView
     func fetchAndReload(){
         
         do{
             try  pm.fetchResultController.performFetch()
             todoTable.reloadData()
+            setWeekDay()
         }catch let err{
             print("Fatal error", err.localizedDescription)
         }
@@ -273,8 +337,32 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         cell.startLabel.text = self.dateFormatter.string(from: row.start!)
         cell.endLabel.text = self.dateFormatter.string(from: row.end!)
         cell.contentLabel.text = row.todo
-        cell.reLabel.text = "구현예정"
-//        row.alarm
+        var reString = ""
+        for i in row.re!{
+            var temp = ""
+            switch i {
+            case 0:
+                temp = " 월"
+            case 1:
+                temp = " 화"
+            case 2:
+                temp = " 수"
+            case 3:
+                temp = " 목"
+            case 4:
+                temp = " 금"
+            case 5:
+                temp = " 토"
+            case 6:
+                temp = " 일"
+            default:
+                print("error")
+            }
+            reString += temp
+        }
+        cell.reLabel.text = "반복:" + (reString == "" ? " 없음" : reString)
+
+        //        row.alarm
         cell.startDate = row.start
         cell.endDate = row.end
 
