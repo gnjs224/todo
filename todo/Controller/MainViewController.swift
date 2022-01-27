@@ -75,7 +75,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 //            dayScroll.setContentOffset(CGPoint(x: (day <= 9 ? day * day * 2 : day * 20), y: 0), animated: true)
         }
     }
-    var dayOfWeek = 1 //월: 1  일: 7
+    var dayOfWeek = 0 //월: 0  일: 6
     var selectedDayButton: UIButton?
     var i = 0
     // MARK: - Action
@@ -89,12 +89,12 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         
     
         if endDate.date < startDate.date { // 제약조건
-            showToast(message: "에러: 시작 > 종료")
+            showToast(message: "에러: 시작 > 종료") //ex
         }else{ //실행
             var re: [Int] = []
             for (i,button) in dayButtonArray!.enumerated(){
                 if button.titleColor(for: .normal) == UIColor.red{
-                    re.append(i)
+                        re.append(i)
                 }
             }
             let schedule = PersistenceManager.Schedule(start: startDate.date, end: endDate.date, todo: scheduleText.text!, re: re, alarm: alarmSwitch.isOn)
@@ -152,7 +152,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
                 self?.year = Int(item)!
             }else {
                 self?.month = Int(item)!
-                self?.days = [1,2]
             }
             self?.fetchAndReload()
         }
@@ -304,9 +303,12 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dateFormatter.dateFormat = "yyyyMMdd"
 //        let stringMonth =
         let now = dateFormatter.date(from: "\(year)\(String(format: "%02d", month))\(String(format: "%02d", day))")
-        dayOfWeek = Calendar.current.component(.weekday, from: now!)
-        let weekdays = ["일","월","화","수","목","금","토"]
-        dayOfWeekLabel.text = weekdays[dayOfWeek-1]+"요일"
+        dayOfWeek = Calendar.current.component(.weekday, from: now!)-2
+        if dayOfWeek < 0 {
+            dayOfWeek = 6
+        }
+        let weekdays = ["월","화","수","목","금","토","일"]
+        dayOfWeekLabel.text = weekdays[dayOfWeek]+"요일"
         
     }
     
@@ -334,11 +336,14 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = pm.fetchResultController.object(at: indexPath)
-        if !((row.re?.isEmpty) ?? true || (!(row.re?.contains(dayOfWeek-1) ?? true))) {
+        print(dayOfWeek,row.re,row.re!.isEmpty,row.re!.contains(dayOfWeek-1))
+        if ((row.re!.isEmpty) || ((row.re!.contains(dayOfWeek)))) {
+            return tableView.rowHeight
+        }else{
             return 0
-        }//달력 구현 후 테스트
-
-        return tableView.rowHeight
+        }
+        
+        //달력 구현 후 테스트
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
