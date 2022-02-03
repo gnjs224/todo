@@ -20,7 +20,6 @@ class ModifyViewController: UIViewController, NSFetchedResultsControllerDelegate
     @IBOutlet weak var ModifyStart: UIDatePicker!
     @IBOutlet weak var ModifyEnd: UIDatePicker!
     @IBOutlet weak var ModifyContent: UITextField!
-    @IBOutlet weak var ModifyRe: UIDatePicker!
     @IBOutlet weak var ModifyAlarm: UISwitch!
 
 

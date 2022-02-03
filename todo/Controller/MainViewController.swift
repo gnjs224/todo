@@ -16,7 +16,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var scheduleText: UITextField!
-//    @IBOutlet weak var reitration: UISwitch! // 반복 구현해야함
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var todoTable: UITableView!
     @IBOutlet weak var dayScroll: UIScrollView!
@@ -30,7 +29,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var fri: UIButton!
     @IBOutlet weak var sat: UIButton!
     @IBOutlet weak var sun: UIButton!
-//    weak var delegate: SendUpdateProtocol?
+    
     var monChecked: Bool! = false
     var tueChecked: Bool! = false
     var wedChecked: Bool! = false
@@ -71,8 +70,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     var day: Int = 1{
         didSet{
             pm.updateDate(day, "day")
-            print(dayScroll.contentOffset)
-//            dayScroll.setContentOffset(CGPoint(x: (day <= 9 ? day * day * 2 : day * 20), y: 0), animated: true)
         }
     }
     var dayOfWeek = 0 //월: 0  일: 6
@@ -81,13 +78,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     // MARK: - Action
     
     @IBAction func touchUpAddButton(_ sender: UIButton){
-//        print("시작:", startDate.date)
-//        print("종료:", endDate.date)
-//        print("내용: ", scheduleText.text!)
-//        print("반복: ", alarmSwitch.isOn)//?
-//        print("알람: ", alarmSwitch.isOn)
-        
-    
         if endDate.date < startDate.date { // 제약조건
             showToast(message: "에러: 시작 > 종료") //ex
         }else{ //실행
@@ -101,16 +91,13 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             pm.insertSchedule(schedule)
             fetchAndReload()
         }
-//        resetCondition()
 
     }
     @IBAction func touchUpWeekButton(_ sender: UIButton!){
-//        print(dayButtonArray)
-//        print(sender.tintColor)
-        if sender.titleColor(for: .normal) == UIColor.systemBlue {
+        if sender.titleColor(for: .normal) == UIColor.black {
             setButtonColor(sender, UIColor.red)
         }else{
-            setButtonColor(sender, UIColor.systemBlue)
+            setButtonColor(sender, UIColor.black)
 
         }
     }
@@ -147,7 +134,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         dropDown.show()
         dropDown.selectionAction = {[weak self](index: Int, item: String) in
             sender.setTitle("\(item)"+(type == "month" ? "월":"년"), for: .normal)
-            sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
+            sender.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30)
             if type == "year" {
                 self?.year = Int(item)!
             }else {
@@ -172,7 +159,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         
     }
     func changeDate(_ yyyy:Int, _ mm:String, _ dd: String){
-        print("asd")
         let nowDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
@@ -180,7 +166,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         str += ":\(yyyy):\(mm):\(dd)"
         dateFormatter.dateFormat = "HH:mm:yyyy:MM:dd"
         let result = dateFormatter.date(from: str)!
-        print(result,year,month,day)
         startDate?.date = result
         endDate?.date = result
     }
@@ -227,8 +212,6 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
             
             button.snp.makeConstraints{make in
                 make.height.width.equalTo(30)
-
-//                make.left.equalTo(1)
             }
             button.addTarget(self, action: #selector(touchUpDayButton(_:)), for: .touchUpInside)
             
@@ -247,23 +230,10 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         super.viewDidLoad()
         pm.delegate = self
         dayButtonArray = [mon,tue,wed,thi,fri,sat,sun]
-//        startDate.
-//        pm = PersistenceManager.shared
         resetCondition()
-//        fetchWeekStackView()
 
         
     }
-//    func fetchWeekStackView(){
-//        view.addSubview(weekStackView)
-//        dayScroll.backgroundColor = UIColor.gray
-//        weekStackView.snp.makeConstraints { make in
-//            make.trailing.equalTo(-70)
-//            make.leading.equalTo(130)
-//            make.height.equalTo(35)
-//            make.top.equalTo(200)
-//        }
-//    }
     func resetCondition(){
         let nowDate = Date()
         let dateFormatter = DateFormatter()
@@ -283,19 +253,21 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         day = Int(arr[2])!
         monthButton.setTitle(String(month)+"월", for: .normal)
         yearButton.setTitle(String(year)+"년", for: .normal)
-        
+//        monthButton.titleLabel?.setfonr
+        monthButton.titleLabel?.font = UIFont.systemFont(ofSize: 40)
+        monthButton.titleLabel?.textColor = .red
         fetchAndReload()
         showScrollView()
         
         for button in dayButtonArray!{
-            setButtonColor(button, UIColor.systemBlue)
+            setButtonColor(button, UIColor.black)
         }
         
     }
     func setButtonColor(_ button: UIButton, _ color: UIColor){
-        print(button)
         button.setTitle(button.titleLabel?.text!, for: .normal)
         button.setTitleColor(color, for: .normal)
+        button.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30.0)
         
     }
     func setWeekDay(){
@@ -336,7 +308,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = pm.fetchResultController.object(at: indexPath)
-        print(dayOfWeek,row.re,row.re!.isEmpty,row.re!.contains(dayOfWeek-1))
+//        print(dayOfWeek,row.re,row.re!.isEmpty,row.re!.contains(dayOfWeek-1))
         if ((row.re!.isEmpty) || ((row.re!.contains(dayOfWeek)))) {
             return tableView.rowHeight
         }else{

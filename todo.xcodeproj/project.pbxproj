@@ -20,6 +20,7 @@
 		78516D5E278D770B00F5A394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78516D5C278D770B00F5A394 /* LaunchScreen.storyboard */; };
 		789187A1278EB338001B8A7B /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7891879F278EB338001B8A7B /* TodoList.xcdatamodeld */; };
 		789187CB278FFBC2001B8A7B /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789187CA278FFBC2001B8A7B /* PersistenceManager.swift */; };
+		78BF971C27AB62F500F1E8DB /* SDMiSaeng.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78BF971B27AB62F500F1E8DB /* SDMiSaeng.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		78516D5F278D770B00F5A394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		789187A0278EB338001B8A7B /* TodoList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoList.xcdatamodel; sourceTree = "<group>"; };
 		789187CA278FFBC2001B8A7B /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		78BF971B27AB62F500F1E8DB /* SDMiSaeng.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SDMiSaeng.ttf; path = ../../../../SDMiSaeng.ttf; sourceTree = "<group>"; };
 		EF007EA92EDF86BB7A96BDC1 /* Pods_todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 		78516D50278D770B00F5A394 /* todo */ = {
 			isa = PBXGroup;
 			children = (
+				78BF971A27AB62DA00F1E8DB /* Font */,
 				7803A681279D2CCD00E41CC8 /* View */,
 				7803A680279D2C9C00E41CC8 /* Model */,
 				7803A67F279D2C9100E41CC8 /* Controller */,
@@ -131,6 +134,14 @@
 				789187CA278FFBC2001B8A7B /* PersistenceManager.swift */,
 			);
 			path = todo;
+			sourceTree = "<group>";
+		};
+		78BF971A27AB62DA00F1E8DB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				78BF971B27AB62F500F1E8DB /* SDMiSaeng.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78BF971C27AB62F500F1E8DB /* SDMiSaeng.ttf in Resources */,
 				78516D5E278D770B00F5A394 /* LaunchScreen.storyboard in Resources */,
 				78516D5B278D770B00F5A394 /* Assets.xcassets in Resources */,
 				78516D59278D770B00F5A394 /* Main.storyboard in Resources */,

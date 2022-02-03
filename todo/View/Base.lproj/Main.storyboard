@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SDMiSaeng.ttf">
+            <string>SDMiSaeng</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--일정-->
         <scene sceneID="tne-QT-ifu">
@@ -23,7 +28,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="iIB-Pu-Eq0"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pn6-92-tXF">
-                                <rect key="frame" x="172" y="269.5" width="70.5" height="51"/>
+                                <rect key="frame" x="172" y="274.5" width="70.5" height="51"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus.circle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
@@ -35,7 +40,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wWO-MA-chh">
-                                <rect key="frame" x="75" y="185.5" width="264" height="35"/>
+                                <rect key="frame" x="66.5" y="190.5" width="281" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ofS-S1-n4I"/>
                                 </constraints>
@@ -43,58 +48,58 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시작" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyq-UI-MpN">
-                                <rect key="frame" x="30" y="94" width="35" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="30" y="98" width="29.5" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수요일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jP-4y-rEi">
-                                <rect key="frame" x="349" y="54" width="45" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="357.5" y="54" width="36.5" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-y9-M8k">
-                                <rect key="frame" x="30" y="191" width="35" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="30" y="195.5" width="26.5" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTG-Y3-dVa">
-                                <rect key="frame" x="30" y="144" width="35" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="30" y="148" width="24.5" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="알람" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFq-eT-L6C">
-                                <rect key="frame" x="290" y="235" width="35" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="295.5" y="240.5" width="29.5" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-DI-717">
-                                <rect key="frame" x="335" y="231.5" width="51" height="31"/>
+                                <rect key="frame" x="335" y="237.5" width="51" height="31"/>
                             </switch>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="e8q-uV-Dus">
-                                <rect key="frame" x="47" y="81" width="320" height="50"/>
+                                <rect key="frame" x="47" y="85.5" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="zOV-5w-tsN"/>
                                 </constraints>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="MfI-VB-635">
-                                <rect key="frame" x="47" y="131" width="320" height="50"/>
+                                <rect key="frame" x="47" y="135.5" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Mhl-0l-HF5"/>
                                 </constraints>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="반복" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdc-zc-vfe">
-                                <rect key="frame" x="30" y="235" width="35" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <rect key="frame" x="30" y="240.5" width="27" height="25"/>
+                                <fontDescription key="fontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-96-sM1">
-                                <rect key="frame" x="0.0" y="366.5" width="414" height="446.5"/>
+                                <rect key="frame" x="0.0" y="371.5" width="414" height="441.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Pli-sb-Ja7" customClass="CustomTableViewCell" customModule="todo" customModuleProvider="target">
@@ -162,35 +167,37 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="63E-ut-9Do">
-                                <rect key="frame" x="30" y="335.5" width="354" height="32"/>
+                                <rect key="frame" x="30" y="340.5" width="354" height="32"/>
                                 <segments>
                                     <segment title="일정 보기"/>
                                     <segment title="시계 보기"/>
                                 </segments>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28x-md-9q7">
-                                <rect key="frame" x="20" y="279.5" width="110" height="31"/>
+                                <rect key="frame" x="20" y="283" width="102.5" height="34"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="조건 초기화"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.up.forward.circle" catalog="system" title="조건 초기화">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="20"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpResetConditionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3iu-55-tfT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jwC-Ea-OUr">
-                                <rect key="frame" x="20" y="47" width="79" height="35"/>
+                                <rect key="frame" x="20" y="47" width="81" height="39"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="2022년">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpYearButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kvh-vv-HS8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzM-jt-2RT">
-                                <rect key="frame" x="80" y="47" width="47" height="35"/>
+                                <rect key="frame" x="80" y="47" width="44.5" height="39"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="1월">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpMonthButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xXg-bg-cJ1"/>
@@ -200,91 +207,107 @@
                                 <rect key="frame" x="286" y="279" width="108" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="format test"/>
+                                <buttonConfiguration key="configuration" style="plain" title="format test">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="20"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="deleteTest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KWM-vP-Y4H"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQX-N9-2nt">
-                                <rect key="frame" x="95" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="87" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="o6R-K1-yif"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="화"/>
+                                <buttonConfiguration key="configuration" style="plain" title="화">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dK1-D6-ENA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-Mj-fO8">
-                                <rect key="frame" x="155" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="147" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="fPj-w6-NMB"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="금"/>
+                                <buttonConfiguration key="configuration" style="plain" title="금">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="crK-ba-bIZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIn-gF-2WI">
-                                <rect key="frame" x="175" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="167" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="MsO-5z-gnc"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="토"/>
+                                <buttonConfiguration key="configuration" style="plain" title="토">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j9U-zg-dq5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pm-hL-9Wv">
-                                <rect key="frame" x="195" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="187" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="n5b-6h-3Ol"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="일"/>
+                                <buttonConfiguration key="configuration" style="plain" title="일">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iFj-0R-L0k"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqk-lh-okW">
-                                <rect key="frame" x="115" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="107" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="6wH-gz-puI"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="수"/>
+                                <buttonConfiguration key="configuration" style="plain" title="수">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mdh-Ry-LAH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbA-WJ-C56">
-                                <rect key="frame" x="135" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="127" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="nQs-Cv-XFu"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="목"/>
+                                <buttonConfiguration key="configuration" style="plain" title="목">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kgf-1b-SLq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6e-jy-mHy">
-                                <rect key="frame" x="75" y="231.5" width="20" height="31"/>
+                                <rect key="frame" x="67" y="238.5" width="20" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="tlx-3l-NNs"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="tintColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="월"/>
+                                <buttonConfiguration key="configuration" style="plain" title="월">
+                                    <fontDescription key="titleFontDescription" name="SDMiSaeng" family="Sandoll MiSaeng" pointSize="15"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="touchUpWeekButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5SL-a8-2hL"/>
                                 </connections>
