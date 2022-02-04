@@ -29,14 +29,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var fri: UIButton!
     @IBOutlet weak var sat: UIButton!
     @IBOutlet weak var sun: UIButton!
-    
-    var monChecked: Bool! = false
-    var tueChecked: Bool! = false
-    var wedChecked: Bool! = false
-    var thuChecked: Bool! = false
-    var friChecked: Bool! = false
-    var satChecked: Bool! = false
-    var sunChecked: Bool! = false
+
     var dayButtonArray: [UIButton]?
     //MARK: - Value
     var pm: PersistenceManager = PersistenceManager.shared
@@ -83,7 +76,7 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         }else{ //실행
             var re: [Int] = []
             for (i,button) in dayButtonArray!.enumerated(){
-                if button.titleColor(for: .normal) == UIColor.red{
+                if button.backgroundColor == UIColor.black{
                         re.append(i)
                 }
             }
@@ -95,9 +88,11 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     }
     @IBAction func touchUpWeekButton(_ sender: UIButton!){
         if sender.titleColor(for: .normal) == UIColor.black {
-            setButtonColor(sender, UIColor.red)
+            setButtonColor(sender, UIColor.white)
+            sender.backgroundColor = UIColor.black
         }else{
             setButtonColor(sender, UIColor.black)
+            sender.backgroundColor = UIColor.white
 
         }
     }
@@ -129,12 +124,13 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     
     // MARK: - Method
     func dropDownAndChangeButtonText(_ dropDown: DropDown, _ sender: UIButton, _ type:String){
+        dropDown.textFont = UIFont(name: "SDMiSaeng", size: 15)!
         dropDown.anchorView = sender
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.show()
         dropDown.selectionAction = {[weak self](index: Int, item: String) in
             sender.setTitle("\(item)"+(type == "month" ? "월":"년"), for: .normal)
-            sender.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30)
+//            sender.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30)
             if type == "year" {
                 self?.year = Int(item)!
             }else {
@@ -200,16 +196,20 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         days.forEach{ data in
             let button = UIButton()
             if data == day {
-                button.setTitleColor(.red, for: .normal)
+                button.setTitleColor(.white, for: .normal)
                 selectedDayButton = button
+                button.backgroundColor = .black
             }else{
-                button.setTitleColor(.blue, for: .normal)
+                button.setTitleColor(.black, for: .normal)
+                
             }
             button.layer.cornerRadius = 12
-            button.backgroundColor = UIColor.orange
+//            button.backgroundColor = UIColor.orange
+            button.layer.borderWidth = 2
+            button.layer.borderColor = UIColor.darkGray.cgColor
             button.setTitle(String(data), for: .normal)
             stackView.addArrangedSubview(button)
-            
+            button.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30)
             button.snp.makeConstraints{make in
                 make.height.width.equalTo(30)
             }
@@ -219,9 +219,12 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         
     }
     @objc func touchUpDayButton(_ sender:UIButton){
-        selectedDayButton?.setTitleColor(.blue, for: .normal)
+        
+        selectedDayButton?.setTitleColor(.black, for: .normal)
+        selectedDayButton?.backgroundColor = .white
         selectedDayButton = sender
-        sender.setTitleColor(.red, for: .normal)
+        sender.setTitleColor(.white, for: .normal)
+        sender.backgroundColor = .black
         day = Int(sender.titleLabel?.text ?? "1")!
         fetchAndReload()
         
@@ -231,7 +234,29 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         pm.delegate = self
         dayButtonArray = [mon,tue,wed,thi,fri,sat,sun]
         resetCondition()
+        for button in dayButtonArray!{
+            setButtonColor(button, UIColor.black)
+            button.layer.cornerRadius = 9
+            button.layer.borderColor = UIColor.darkGray.cgColor
+            button.layer.borderWidth = 1
+        }
+        setButtonColor(monthButton, UIColor.black)
+        monthButton.layer.cornerRadius = 9
+        monthButton.layer.borderColor = UIColor.darkGray.cgColor
+        monthButton.layer.borderWidth = 0.3
 
+        setButtonColor(yearButton, UIColor.black)
+        yearButton.layer.cornerRadius = 9
+        yearButton.layer.borderColor = UIColor.darkGray.cgColor
+        yearButton.layer.borderWidth = 0.3
+        
+        
+        scheduleText.layer.cornerRadius = 3
+        
+        scheduleText.borderStyle = .roundedRect
+        scheduleText.layer.borderColor = UIColor.darkGray.cgColor
+        scheduleText.layer.borderWidth = 1
+//        scheduleText.layer.borderWidth = 6
         
     }
     func resetCondition(){
@@ -253,21 +278,16 @@ class MainViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         day = Int(arr[2])!
         monthButton.setTitle(String(month)+"월", for: .normal)
         yearButton.setTitle(String(year)+"년", for: .normal)
-//        monthButton.titleLabel?.setfonr
-        monthButton.titleLabel?.font = UIFont.systemFont(ofSize: 40)
-        monthButton.titleLabel?.textColor = .red
         fetchAndReload()
         showScrollView()
         
-        for button in dayButtonArray!{
-            setButtonColor(button, UIColor.black)
-        }
+
         
     }
     func setButtonColor(_ button: UIButton, _ color: UIColor){
         button.setTitle(button.titleLabel?.text!, for: .normal)
         button.setTitleColor(color, for: .normal)
-        button.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30.0)
+//        button.titleLabel?.font = UIFont(name: "SDMiSaeng", size: 30.0)
         
     }
     func setWeekDay(){
